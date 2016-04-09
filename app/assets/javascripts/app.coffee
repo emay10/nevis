@@ -16,7 +16,7 @@ angular.module 'nscom', [
 
 angular.module 'nscom'
 
-  .constant 'API_URL', 'http://localhost:3000/api/'
+  .constant 'API_URL', '/api/'
 
   .config [
     '$stateProvider'
