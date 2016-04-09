@@ -1,4 +1,5 @@
 class ClientsController < ApplicationController
+  before_action :authenticate
   before_action :set_client, only: [:show, :edit, :update, :destroy]
 
   # GET /clients
@@ -28,10 +29,8 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.save
-        format.html { redirect_to @client, notice: 'Client was successfully created.' }
         format.json { render :show, status: :created, location: @client }
       else
-        format.html { render :new }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end
     end

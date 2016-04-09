@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  carrier: MyString
+  kind: 1
+  commission: 1
+
+two:
+  name: MyString
+  carrier: MyString
+  kind: 1
+  commission: 1

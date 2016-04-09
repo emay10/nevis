@@ -1,2 +1,7 @@
 asset 'bootstrap'
+asset 'font-awesome'
 asset 'angular'
+asset 'satellizer'
+asset 'ui-router'
+asset 'angular-resource'
+asset 'angular-bootstrap'
