@@ -14,9 +14,5 @@
  *= require font-awesome
  *= require_tree .
  *= require_self
+ *= require app
  */
-
-body
-{
-  padding-top: 70px;
-}
