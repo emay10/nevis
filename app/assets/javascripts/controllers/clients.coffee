@@ -7,6 +7,11 @@ angular
     '$stateParams'
     'Client'
     ($scope, $state, $stateParams, Client) ->
+      $scope.remove = (id) ->
+        client = new Client(id: id)
+        if client
+          client.$remove id: id, ->
+            $scope.clients = $scope.clients.filter (e) -> e.id != id
       Client.query (res) ->
         $scope.clients = res
   ]

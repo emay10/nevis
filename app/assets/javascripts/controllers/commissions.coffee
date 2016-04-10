@@ -8,6 +8,12 @@ angular
     'Commission'
     'Client'
     ($scope, $state, $stateParams, Commission, Client) ->
+      $scope.remove = (id) ->
+        commission = new Commission(id: id)
+        if commission
+          commission.$remove id: id, ->
+            $scope.commissions = $scope.commissions.filter (e) -> e.id != id
+
       Commission.query (res) ->
         $scope.commissions = res
   ]

@@ -3,11 +3,11 @@ angular.module 'nscom.factories.policies', []
     '$resource',
     'API_URL',
     ($resource, API_URL) ->
-      $resource API_URL + 'policies/:id.json', {},
+      $resource API_URL + 'policies/:id', {},
         query:
           #vulnerable
           isArray: true
         save:
           method: 'POST'
-          url: API_URL + 'policies.json'
+          url: API_URL + 'policies'
   ]

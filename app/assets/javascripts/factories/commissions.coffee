@@ -3,11 +3,14 @@ angular.module 'nscom.factories.commissions', []
     '$resource',
     'API_URL',
     ($resource, API_URL) ->
-      $resource API_URL + 'commissions/:id.json', {},
+      $resource API_URL + 'commissions/:id', {},
+        remove:
+          method: 'DELETE'
+          url: API_URL + 'commissions/:id'
         query:
           #vulnerable
           isArray: true
         save:
           method: 'POST'
-          url: API_URL + 'commissions.json'
+          url: API_URL + 'commissions'
   ]

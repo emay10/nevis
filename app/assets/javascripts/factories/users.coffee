@@ -3,11 +3,11 @@ angular.module 'nscom.factories.users', []
     '$resource',
     'API_URL',
     ($resource, API_URL) ->
-      $resource API_URL + 'users/:id.json', {},
+      $resource API_URL + 'users/:id', {},
         save:
           method: 'PUT'
-          url: API_URL + 'users.json'
+          url: API_URL + 'users'
         current:
           isArray: false
-          url: API_URL + 'users/current.json'
+          url: API_URL + 'users/current'
   ]
