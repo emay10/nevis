@@ -7,6 +7,9 @@ angular.module 'nscom.factories.clients', []
         remove:
           method: 'DELETE'
           url: API_URL + 'clients/:id'
+        update:
+          method: 'PATCH'
+          url: API_URL + 'clients/:id'
         query:
           #vulnerable
           isArray: true

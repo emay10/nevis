@@ -94,6 +94,10 @@ angular.module 'nscom'
         .state 'auth.clients',
           abstract: true
           template: '<ui-view/>'
+        .state 'auth.clients.edit',
+          url: '/clients/:id/edit'
+          templateUrl: 'clients/edit.html'
+          controller: 'clientsEditController'
         .state 'auth.clients.new',
           url: '/clients/new'
           templateUrl: 'clients/new.html'
@@ -105,6 +109,10 @@ angular.module 'nscom'
         .state 'auth.commissions',
           abstract: true
           template: '<ui-view/>'
+        .state 'auth.commissions.edit',
+          url: '/commissions/:id/edit'
+          templateUrl: 'commissions/edit.html'
+          controller: 'commissionsEditController'
         .state 'auth.commissions.new',
           url: '/commissions/new'
           templateUrl: 'commissions/new.html'

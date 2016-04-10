@@ -32,6 +32,25 @@ angular
           $scope.processing = true
           $scope.form.$save ->
             $state.go 'auth.clients.index'
+  ]
 
+  .controller 'clientsEditController', [
+    '$scope'
+    '$state'
+    '$stateParams'
+    'Client'
+    ($scope, $state, $stateParams, Client) ->
+      client_id = $stateParams.id
+      Client.get id: client_id, (res) ->
+        $scope.form = res
+      $scope.processing = false
+      $scope.init = true
+      $scope.submit = ->
+        $scope.errors = []
+        $scope.init = false
+        if $scope.client.$valid
+          $scope.processing = true
+          $scope.form.$update id: $scope.form.id, ->
+            $state.go 'auth.clients.index'
   ]
 

@@ -34,6 +34,7 @@
             {{commission.amount}}
           </td>
           <td>
+            <a class="btn btn-xs btn-primary" data-ui-sref="auth.commissions.edit({id: commission.id})"><i class="fa fa-pencil"></i></a>
             <a class="btn btn-xs btn-danger" data-ng-click="remove(commission.id)"><i class="fa fa-times"></i></a>
           </td>
         </tr>

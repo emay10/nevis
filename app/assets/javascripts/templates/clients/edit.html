@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3">
+    <div class="page-title">
+      <h2>Edit Client</h2>
+    </div>
+    <form name="client" data-ng-submit="submit()">
+      <div class="errors" ng-show="errors.length > 0">
+        <div data-ng-repeat="error in errors">
+          {{ error }}
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Name" data-ng-model="form.name" data-ng-required="true">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Number" data-ng-model="form.number" data-ng-required="true">
+      </div>
+      <div class="form-group">
+        <input type="email" class="form-control" placeholder="Email" data-ng-model="form.email" data-ng-required="true">
+      </div>
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select class="form-control" data-ng-model="form.status" id="status">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+          <option value="pending">Pending</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" data-ng-disabled="processing">Update</button>
+    </form>
+  </div>
+</div>
