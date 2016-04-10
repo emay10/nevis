@@ -17,7 +17,7 @@ angular
     '$stateParams'
     'Client'
     ($scope, $state, $stateParams, Client) ->
-      $scope.form = new Client(name: '', email: '')
+      $scope.form = new Client(name: '', email: '', status: 'active')
       $scope.processing = false
       $scope.init = true
       $scope.submit = ->

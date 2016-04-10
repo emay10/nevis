@@ -1,0 +1,40 @@
+<div class="row page-title clients-title">
+  <div class="col-xs-4 col-xs-offset-3">
+    <h2>Commissions</h2>
+  </div>
+  <div class="col-xs-2 text-right">
+    <a class="btn btn-success" role="button" data-ui-sref="auth.commissions.new">Add Commission</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3">
+    <table class="table table-striped table-hover" data-ts-wrapper>
+      <thead>
+        <th data-ts-criteria="id" data-ts-default>ID</th>
+        <th data-ts-criteria="client.name">Client</th>
+        <th data-ts-criteria="policy.name">Policy</th>
+        <th data-ts-criteria="user.name">Agent</th>
+        <th data-ts-criteria="amount|parseInt">Commission</th>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="commission in commissions" data-ts-repeat>
+          <td>
+            {{commission.id}}
+          </td>
+          <td>
+            {{commission.client.name}}
+          </td>
+          <td>
+            {{commission.policy.name}}
+          </td>
+          <td>
+            {{commission.user.name}}
+          </td>
+          <td>
+            {{commission.amount}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

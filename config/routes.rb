@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :policies
     resources :clients
     resources :agencies
+    resources :commissions
   end
   root 'static#index'
   match '*path', to: 'static#index', via: :all

@@ -4,13 +4,15 @@ angular.module 'nscom', [
   'satellizer'
   #'angularFileUpload'
   'ui.bootstrap'
-  #'infinite-scroll'
-  #'LocalStorageModule'
+  'tableSort'
   'nscom.controllers.users'
   'nscom.controllers.clients'
+  'nscom.controllers.commissions'
   'nscom.controllers.static'
   'nscom.factories.users'
   'nscom.factories.clients'
+  'nscom.factories.commissions'
+  'nscom.factories.policies'
   'templates'
 ]
 
@@ -100,6 +102,19 @@ angular.module 'nscom'
           url: '/clients'
           templateUrl: 'clients/index.html'
           controller: 'clientsIndexController'
+        .state 'auth.commissions',
+          abstract: true
+          template: '<ui-view/>'
+        .state 'auth.commissions.new',
+          url: '/commissions/new'
+          templateUrl: 'commissions/new.html'
+          controller: 'commissionsNewController'
+        .state 'auth.commissions.index',
+          url: '/commissions'
+          templateUrl: 'commissions/index.html'
+          controller: 'commissionsIndexController'
+
+
 
       # converting json object payload to form-urlencoded string
       #$httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";

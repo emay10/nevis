@@ -17,6 +17,7 @@
 //= require ui-router
 //= require angular-resource
 //= require angular-bootstrap
+//= require angular-tablesort
 //= require satellizer
 //= require angular-rails-templates
 //= require_tree ./templates

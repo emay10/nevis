@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160409101446) do
+ActiveRecord::Schema.define(version: 20160410073815) do
 
   create_table "agencies", force: :cascade do |t|
     t.string   "name"
@@ -34,6 +34,19 @@ ActiveRecord::Schema.define(version: 20160409101446) do
   add_index "clients", ["policy_id"], name: "index_clients_on_policy_id"
   add_index "clients", ["user_id"], name: "index_clients_on_user_id"
 
+  create_table "commissions", force: :cascade do |t|
+    t.integer  "client_id"
+    t.integer  "user_id"
+    t.integer  "policy_id"
+    t.integer  "amount",     default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "commissions", ["client_id"], name: "index_commissions_on_client_id"
+  add_index "commissions", ["policy_id"], name: "index_commissions_on_policy_id"
+  add_index "commissions", ["user_id"], name: "index_commissions_on_user_id"
+
   create_table "policies", force: :cascade do |t|
     t.string   "name"
     t.string   "carrier"
@@ -44,10 +57,12 @@ ActiveRecord::Schema.define(version: 20160409101446) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string  "email",            default: "", null: false
-    t.string  "password_digest",  default: "", null: false
+    t.string  "email",           default: "", null: false
+    t.string  "password_digest", default: "", null: false
     t.integer "agency_id"
-    t.integer "commssion_amount"
+    t.integer "commission"
+    t.integer "role",            default: 0,  null: false
+    t.string  "name"
   end
 
   add_index "users", ["agency_id"], name: "index_users_on_agency_id"

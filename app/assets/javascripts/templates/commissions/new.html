@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3">
+    <div class="page-title">
+      <h2>New Commission</h2>
+    </div>
+    <form name="client" data-ng-submit="submit()">
+      <div class="errors" ng-show="errors.length > 0">
+        <div data-ng-repeat="error in errors">
+          {{ error }}
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Amount" data-ng-model="form.amount" data-ng-required="true">
+      </div>
+      <div class="form-group">
+        <label for="client">Client</label>
+        <select class="form-control" data-ng-model="form.client_id" id="client">
+          <option ng-repeat="option in clients" value="{{option.id}}">{{option.name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="policy">Policy</label>
+        <select class="form-control" data-ng-model="form.policy_id" id="policy">
+          <option ng-repeat="option in policies" value="{{option.id}}">{{option.name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="user">Agent</label>
+        <select class="form-control" data-ng-model="form.user_id" id="user">
+          <option ng-repeat="option in users" value="{{option.id}}">{{option.name}}</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" data-ng-disabled="processing">Create</button>
+    </form>
+  </div>
+</div>
