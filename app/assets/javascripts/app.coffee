@@ -8,6 +8,7 @@ angular.module 'nscom', [
   'nscom.controllers.users'
   'nscom.controllers.clients'
   'nscom.controllers.commissions'
+  'nscom.controllers.policies'
   'nscom.controllers.static'
   'nscom.factories.users'
   'nscom.factories.clients'
@@ -106,6 +107,22 @@ angular.module 'nscom'
           url: '/clients'
           templateUrl: 'clients/index.html'
           controller: 'clientsIndexController'
+
+        .state 'auth.policies',
+          abstract: true
+          template: '<ui-view/>'
+        .state 'auth.policies.edit',
+          url: '/policies/:id/edit'
+          templateUrl: 'policies/edit.html'
+          controller: 'policiesEditController'
+        .state 'auth.policies.new',
+          url: '/policies/new'
+          templateUrl: 'policies/new.html'
+          controller: 'policiesNewController'
+        .state 'auth.policies.index',
+          url: '/policies'
+          templateUrl: 'policies/index.html'
+          controller: 'policiesIndexController'
         .state 'auth.commissions',
           abstract: true
           template: '<ui-view/>'

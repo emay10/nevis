@@ -6,8 +6,7 @@ angular
     '$state'
     '$stateParams'
     'Commission'
-    'Client'
-    ($scope, $state, $stateParams, Commission, Client) ->
+    ($scope, $state, $stateParams, Commission) ->
       $scope.remove = (id) ->
         commission = new Commission(id: id)
         if commission
@@ -27,7 +26,7 @@ angular
     'Policy'
     'User'
     ($scope, $state, $stateParams, Commission, Client, Policy, User) ->
-      $scope.form = new Commission(client_id: 0, policy_id: 0, user_id: 0, amount: '')
+      $scope.form = new Commission(client_id: '', policy_id: '', user_id: '', amount: '')
       $scope.processing = false
       $scope.init = true
       Client.query (res) ->
@@ -39,7 +38,7 @@ angular
       $scope.submit = ->
         $scope.errors = []
         $scope.init = false
-        if $scope.client.$valid
+        if $scope.commission.$valid
           $scope.processing = true
           $scope.form.$save ->
             $state.go 'auth.commissions.index'
@@ -69,7 +68,7 @@ angular
       $scope.submit = ->
         $scope.errors = []
         $scope.init = false
-        if $scope.client.$valid
+        if $scope.commission.$valid
           $scope.processing = true
           $scope.form.$update id: $scope.form.id, ->
             $state.go 'auth.commissions.index'

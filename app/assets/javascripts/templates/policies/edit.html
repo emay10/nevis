@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3">
+    <div class="page-title">
+      <h2>Edit Policy</h2>
+    </div>
+    <form name="policy" data-ng-submit="submit()">
+      <div class="errors" ng-show="errors.length > 0">
+        <div data-ng-repeat="error in errors">
+          {{ error }}
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Name" data-ng-model="form.name" data-ng-required="true">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Carrier" data-ng-model="form.carrier" data-ng-required="true">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Commission" data-ng-model="form.commission" data-ng-required="true">
+      </div>
+      <div class="form-group">
+        <label for="kind">Type</label>
+        <select class="form-control" data-ng-model="form.kind" id="kind">
+          <option value="medical">Medical</option>
+          <option value="dental">Dental</option>
+          <option value="medicare">Medicare</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" data-ng-disabled="processing">Update</button>
+    </form>
+  </div>
+</div>

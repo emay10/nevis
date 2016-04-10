@@ -3,7 +3,7 @@
     <div class="page-title">
       <h2>Edit Commission</h2>
     </div>
-    <form name="client" data-ng-submit="submit()">
+    <form name="commission" data-ng-submit="submit()">
       <div class="errors" ng-show="errors.length > 0">
         <div data-ng-repeat="error in errors">
           {{ error }}
@@ -14,19 +14,19 @@
       </div>
       <div class="form-group">
         <label for="client">Client</label>
-        <select class="form-control" data-ng-model="form.client_id" id="client">
+        <select class="form-control" data-ng-model="form.client_id" id="client" data-ng-required="true">
           <option data-ng-repeat="option in clients" data-ng-selected="option.id == form.client_id" value="{{option.id}}">{{option.name}}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="policy">Policy</label>
-        <select class="form-control" data-ng-model="form.policy_id" id="policy">
+        <select class="form-control" data-ng-model="form.policy_id" id="policy" data-ng-required="true">
           <option data-ng-repeat="option in policies" data-ng-selected="option.id == form.policy_id" value="{{option.id}}">{{option.name}}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="user">Agent</label>
-        <select class="form-control" data-ng-model="form.user_id" id="user">
+        <select class="form-control" data-ng-model="form.user_id" id="user" data-ng-required="true">
           <option ng-repeat="option in users" data-ng-selected="option.id == form.user_id" value="{{option.id}}">{{option.name}}</option>
         </select>
       </div>
