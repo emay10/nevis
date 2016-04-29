@@ -44,6 +44,6 @@ class CommissionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def commission_params
-      params.require(:commission).permit(:client_id, :user_id, :policy_id, :amount)
+      params.require(:commission).permit(:statement_date, :earned_date, :client_id)
     end
 end

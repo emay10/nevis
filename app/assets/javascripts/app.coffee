@@ -77,14 +77,22 @@ angular.module 'nscom'
                 $rootScope.current_user = null
                 $state.go 'users.signin'
           ]
+        .state 'auth.users.new',
+          url: '/users/new'
+          templateUrl: 'users/new.html'
+          controller: 'usersNewController'
         .state 'auth.users.edit',
-          url: '/users/edit'
+          url: '/users/:id/edit'
           templateUrl: 'users/edit.html'
           controller: 'usersEditController'
         .state 'auth.users.show',
           url: '/users/:id'
           templateUrl: 'users/show.html'
           controller: 'usersShowController'
+        .state 'auth.users.index',
+          url: '/users'
+          templateUrl: 'users/index.html'
+          controller: 'usersIndexController'
         .state 'auth.static',
           abstract: true
           template: '<ui-view/>'
@@ -138,6 +146,21 @@ angular.module 'nscom'
           url: '/commissions'
           templateUrl: 'commissions/index.html'
           controller: 'commissionsIndexController'
+        .state 'auth.agencies',
+          abstract: true
+          template: '<ui-view/>'
+        .state 'auth.agencies.edit',
+          url: '/agencies/:id/edit'
+          templateUrl: 'agencies/edit.html'
+          controller: 'agenciesEditController'
+        .state 'auth.agencies.new',
+          url: '/agencies/new'
+          templateUrl: 'agencies/new.html'
+          controller: 'agenciesNewController'
+        .state 'auth.agencies.index',
+          url: '/agencies'
+          templateUrl: 'agencies/index.html'
+          controller: 'agenciesIndexController'
 
 
 

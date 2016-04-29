@@ -71,78 +71,119 @@ angular
             .finally -> $scope.processing = false
   ]
 
-  .controller 'usersEditController', [
+  .controller 'usersIndexController', [
     '$scope'
-    '$upload'
-    'User'
     '$state'
-    '$window'
-    'API_URL'
-    ($scope, $upload, User, $state, $window, API_URL) ->
+    '$stateParams'
+    'User'
+    ($scope, $state, $stateParams, User) ->
+      $scope.remove = (id) ->
+        user = new User(id: id)
+        if user
+          user.$remove id: id, ->
+            $scope.users = $scope.users.filter (e) -> e.id != id
+      User.query (res) ->
+        $scope.users = res
+  ]
+
+  .controller 'usersNewController', [
+    '$scope'
+    '$state'
+    '$stateParams'
+    'User'
+    'Agency'
+    ($scope, $state, $stateParams, User, Agency) ->
+      $scope.form = new User(name: '', email: '', commission: '', password: '', password_confirmation: '')
       $scope.processing = false
       $scope.init = true
-      $scope.$watch 'user', (user) ->
-        if user
-          $scope.provider = null
-          if user.fb_id
-            $scope.provider = 'facebook'
-          else if user.google_id
-            $scope.provider = 'google'
-          $scope.data = new User
-            email: user.email,
-            name: user.name,
-            phone: user.phone,
-            profile_picture: user.profile_picture
-            #token: '',
-            #token_confirmation: ''
-
-          $scope.grabPhoto = ->
-            if $scope.provider
-              $scope.errors = []
-              $scope.notices = []
-              User.fetchPicture provider: $scope.provider,
-                (->
-                  $scope.notices.push 'Profile was successfully updated'
-                  $window.setTimeout (-> $window.location.reload()), 1000
-                ),
-                (-> $scope.errors.push 'Something went wrong')
-
-      $scope.$watch 'file', -> $scope.upload $scope.file if $scope.file
-      $scope.upload = (file) ->
-        $scope.errors = []
-        $scope.notices = []
-        $scope.processing = true
-        file.progress = 0
-        file.success = true
-        $upload.upload
-          url: "#{API_URL}user/picture"
-          fileFormDataName: 'picture'
-          file: file
-        .progress (evt) ->
-          total = parseInt 100.0 * evt.loaded / evt.total
-          if file.progress < total
-            if total < 100
-              file.progress = total
-            else
-              file.progress = 99
-        .success (data, status, headers, config) ->
-          $scope.notices.push 'Profile was successfully updated'
-          $window.setTimeout (-> $window.location.reload()), 1000
-          $scope.processing = false
-        .error (data, status, headers, config) ->
-          file.success = false
-          $scope.processing = false
-          $scope.notices.push 'Something went wrong'
+      User.query (res) ->
+        $scope.users = res
+      Agency.query (res) ->
+        $scope.agencies = res
       $scope.submit = ->
         $scope.errors = []
-        $scope.notices = []
         $scope.init = false
-        if $scope.form.$valid
+        if $scope.user.$valid
           $scope.processing = true
-          $scope.data.$save()
-            .then (res) ->
-              $scope.notices.push 'Profile was successfully updated'
-            .catch (res) ->
-              $scope.errors.push 'Something went wrong'
-            .finally -> $scope.processing = false
+          $scope.form.$save ->
+            $state.go 'auth.users.index'
   ]
+
+  .controller 'usersEditController', [
+    '$scope'
+    '$state'
+    '$stateParams'
+    'User'
+    'Agency'
+    ($scope, $state, $stateParams, User, Agency) ->
+      user_id = $stateParams.id
+      Agency.query (res) ->
+        $scope.agencies = res
+        User.get id: user_id, (res) ->
+          $scope.form = res
+      $scope.processing = false
+      $scope.init = true
+      $scope.submit = ->
+        $scope.errors = []
+        $scope.init = false
+        if $scope.user.$valid
+          $scope.processing = true
+          $scope.form.$update id: $scope.form.id, ->
+            $state.go 'auth.users.index'
+    ]
+
+  .controller 'agenciesIndexController', [
+    '$scope'
+    '$state'
+    '$stateParams'
+    'Agency'
+    ($scope, $state, $stateParams, Agency) ->
+      $scope.remove = (id) ->
+        agency = new Agency(id: id)
+        if agency
+          agency.$remove id: id, ->
+            $scope.agencies = $scope.agencies.filter (e) -> e.id != id
+      Agency.query (res) ->
+        $scope.agencies = res
+  ]
+
+  .controller 'agenciesNewController', [
+    '$scope'
+    '$state'
+    '$stateParams'
+    'Agency'
+    ($scope, $state, $stateParams, Agency) ->
+      $scope.form = new Agency(name: '')
+      $scope.processing = false
+      $scope.init = true
+      $scope.submit = ->
+        $scope.errors = []
+        $scope.init = false
+        if $scope.agency.$valid
+          $scope.processing = true
+          $scope.form.$save ->
+            $state.go 'auth.agencies.index'
+  ]
+
+.controller 'agenciesEditController', [
+    '$scope'
+    '$state'
+    '$stateParams'
+    'Agency'
+    ($scope, $state, $stateParams, Agency) ->
+      agency_id = $stateParams.id
+      Agency.query (res) ->
+        Agency.get id: agency_id, (res) ->
+          $scope.form = res
+      $scope.processing = false
+      $scope.init = true
+      $scope.submit = ->
+        $scope.errors = []
+        $scope.init = false
+        if $scope.agency.$valid
+          $scope.processing = true
+          $scope.form.$update id: $scope.form.id, ->
+            $state.go 'auth.agencies.index'
+    ]
+
+

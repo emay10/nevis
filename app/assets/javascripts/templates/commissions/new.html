@@ -10,25 +10,16 @@
         </div>
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Amount" data-ng-model="form.amount" data-ng-required="true">
-      </div>
-      <div class="form-group">
         <label for="client">Client</label>
         <select class="form-control" data-ng-model="form.client_id" id="client" data-ng-required="true">
-          <option ng-repeat="option in clients" value="{{option.id}}">{{option.name}}</option>
+          <option data-ng-repeat="option in clients" value="{{option.id}}">{{option.name}}</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="policy">Policy</label>
-        <select class="form-control" data-ng-model="form.policy_id" id="policy" data-ng-required="true">
-          <option ng-repeat="option in policies" value="{{option.id}}">{{option.name}}</option>
-        </select>
+        <input type="text" class="form-control" placeholder="Statement month" data-ng-model="form.statement_date" data-ng-required="true">
       </div>
       <div class="form-group">
-        <label for="user">Agent</label>
-        <select class="form-control" data-ng-model="form.user_id" id="user" data-ng-required="true">
-          <option ng-repeat="option in users" value="{{option.id}}">{{option.name}}</option>
-        </select>
+        <input type="text" class="form-control" placeholder="Earned month" data-ng-model="form.earned_date" data-ng-required="true">
       </div>
       <button type="submit" class="btn btn-primary" data-ng-disabled="processing">Create</button>
     </form>

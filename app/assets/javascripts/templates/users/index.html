@@ -1,0 +1,45 @@
+<div class="row page-title clients-title">
+  <div class="col-xs-4 col-xs-offset-3">
+    <h2>Agents</h2>
+  </div>
+  <div class="col-xs-2 text-right">
+    <a class="btn btn-success" role="button" data-ui-sref="auth.users.new">Add Agent</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3">
+    <table class="table table-striped table-hover" data-ts-wrapper>
+      <thead>
+        <th data-ts-criteria="id" data-ts-default>ID</th>
+        <th data-ts-criteria="name">Name</th>
+        <th data-ts-criteria="email">Email</th>
+        <th data-ts-criteria="commission">Commission</th>
+        <th data-ts-criteria="agency.name">Agency</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="user in users" data-ts-repeat>
+          <td>
+            {{user.id}}
+          </td>
+          <td>
+            {{user.name}}
+          </td>
+          <td>
+            {{user.email}}
+          </td>
+          <td>
+            {{user.commission}}
+          </td>
+          <td>
+            {{user.agency.name}}
+          </td>
+          <td>
+            <a class="btn btn-xs btn-primary" data-ui-sref="auth.users.edit({id: user.id})"><i class="fa fa-pencil"></i></a>
+            <a class="btn btn-xs btn-danger" data-ng-click="remove(user.id)"><i class="fa fa-times"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -23,18 +23,12 @@ angular
     '$stateParams'
     'Commission'
     'Client'
-    'Policy'
-    'User'
-    ($scope, $state, $stateParams, Commission, Client, Policy, User) ->
+    ($scope, $state, $stateParams, Commission, Client) ->
       $scope.form = new Commission(client_id: '', policy_id: '', user_id: '', amount: '')
       $scope.processing = false
       $scope.init = true
       Client.query (res) ->
         $scope.clients = res
-      Policy.query (res) ->
-        $scope.policies = res
-      User.query (res) ->
-        $scope.users = res
       $scope.submit = ->
         $scope.errors = []
         $scope.init = false
@@ -51,19 +45,13 @@ angular
     '$stateParams'
     'Commission'
     'Client'
-    'Policy'
-    'User'
-    ($scope, $state, $stateParams, Commission, Client, Policy, User) ->
+    ($scope, $state, $stateParams, Commission, Client) ->
       $scope.init = true
+      commission_id = $stateParams.id
       Client.query (res) ->
         $scope.clients = res
-        Policy.query (res) ->
-          $scope.policies = res
-          User.query (res) ->
-            $scope.users = res
-            commission_id = $stateParams.id
-            Commission.get id: commission_id, (res) ->
-              $scope.form = res
+        Commission.get id: commission_id, (res) ->
+          $scope.form = res
       $scope.processing = false
       $scope.submit = ->
         $scope.errors = []

@@ -21,10 +21,16 @@ angular
     '$state'
     '$stateParams'
     'Client'
-    ($scope, $state, $stateParams, Client) ->
+    'Policy'
+    'User'
+    ($scope, $state, $stateParams, Client, Policy, User) ->
       $scope.form = new Client(name: '', email: '', status: 'active')
       $scope.processing = false
       $scope.init = true
+      Policy.query (res) ->
+        $scope.policies = res
+        User.query (res) ->
+          $scope.users = res
       $scope.submit = ->
         $scope.errors = []
         $scope.init = false
@@ -39,10 +45,16 @@ angular
     '$state'
     '$stateParams'
     'Client'
-    ($scope, $state, $stateParams, Client) ->
+    'Policy'
+    'User'
+    ($scope, $state, $stateParams, Client, Policy, User) ->
       client_id = $stateParams.id
-      Client.get id: client_id, (res) ->
-        $scope.form = res
+      Policy.query (res) ->
+        $scope.policies = res
+        User.query (res) ->
+          $scope.users = res
+          Client.get id: client_id, (res) ->
+            $scope.form = res
       $scope.processing = false
       $scope.init = true
       $scope.submit = ->
