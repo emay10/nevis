@@ -8,5 +8,5 @@
 a = Agency.create(name: 'Agency')
 u = User.create(email: 'knivets@gmail.com', password: 'qweqwe123', password_confirmation: 'qweqwe123', agency: a, name: 'Dima')
 p = Policy.create(name: 'Policy 1', kind: :medical, carrier: 'Carrier 1', commission: 123)
-c = Client.create(name: 'Client 1', status: :active, quantity: 1, number: '123123', email: 'test@example.com', policy: p, user: u)
-Commission.create(client: c, policy: p, user: u, amount: 200)
+c = Client.create(name: 'Client 1', status: :active, quantity: 1, email: 'test@example.com', policy: p, user: u)
+Commission.create(client: c, earned_date: Time.now, statement_date: Time.now)

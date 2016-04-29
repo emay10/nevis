@@ -1,1 +1,1 @@
-json.extract! @commission, :id, :client_id, :user_id, :policy_id, :amount, :created_at, :updated_at
+json.extract! @commission, :id, :client_id, :statement_date, :earned_date

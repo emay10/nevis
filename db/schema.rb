@@ -21,13 +21,12 @@ ActiveRecord::Schema.define(version: 20160410073815) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "name"
-    t.string   "number"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "status"
-    t.integer  "user_id"
+    t.integer  "quantity",   default: 0, null: false
     t.integer  "policy_id"
-    t.integer  "quantity"
+    t.integer  "user_id"
+    t.integer  "status"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.string   "email"
   end
 
@@ -35,17 +34,12 @@ ActiveRecord::Schema.define(version: 20160410073815) do
   add_index "clients", ["user_id"], name: "index_clients_on_user_id"
 
   create_table "commissions", force: :cascade do |t|
-    t.integer  "client_id"
-    t.integer  "user_id"
-    t.integer  "policy_id"
-    t.integer  "amount",     default: 0, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer "client_id"
+    t.date    "statement_date"
+    t.date    "earned_date"
   end
 
   add_index "commissions", ["client_id"], name: "index_commissions_on_client_id"
-  add_index "commissions", ["policy_id"], name: "index_commissions_on_policy_id"
-  add_index "commissions", ["user_id"], name: "index_commissions_on_user_id"
 
   create_table "policies", force: :cascade do |t|
     t.string   "name"
