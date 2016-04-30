@@ -10,6 +10,109 @@ class CommissionsController < ApplicationController
   def show
   end
 
+  def pdf
+    require 'prawn'
+    require 'securerandom'
+    records = Commission.all
+    code = SecureRandom.hex 
+    file = "#{Rails.root}/public/tmp/files/#{code}.pdf"
+    Prawn::Document.generate(file, margin: 40) do
+      text("Commissions", align: :center)
+      move_down 20
+      cols = [
+        'ID',
+        'Client',
+        'Policy',
+        'Agent',
+        'Statement Month',
+        'Earned Month',
+      ]
+      data = [cols]
+      length = 0
+      move_down 20
+      font_size 10
+      records.each do |record|
+        c = []
+        c << record.id
+        if record.client
+          c << record.client.name 
+        else
+          c << ''
+        end
+        if record.client.policy
+          c << record.client.policy.name 
+        else
+          c << ''
+        end
+        if record.client.user
+          c << record.client.user.name 
+        else
+          c << ''
+        end
+        c << record.statement_date
+        c << record.earned_date
+        data << c
+        length = c.length
+      end
+      table(data, position: :center)
+      move_down 20
+    end
+    send_file file, type: 'application/pdf', x_sendfile: true
+  end
+
+  def xls
+    require 'spreadsheet'
+    require 'securerandom'
+    records = Commission.all
+    book = Spreadsheet::Workbook.new
+    sheet = book.create_worksheet
+    bold = Spreadsheet::Format.new weight: :bold
+
+    #sheet.row(0).push "Commissions"
+    cols = [
+      'ID',
+      'Client',
+      'Policy',
+      'Agent',
+      'Statement Month',
+      'Earned Month',
+    ]
+    sheet.row(0).replace cols
+    sheet.row(0).default_format = bold
+    length = 0
+    records.each_with_index do |record, i|
+      c = []
+      c << record.id
+      if record.client
+        c << record.client.name 
+      else
+        c << ''
+      end
+      if record.client.policy
+        c << record.client.policy.name 
+      else
+        c << ''
+      end
+      if record.client.user
+        c << record.client.user.name 
+      else
+        c << ''
+      end
+      c << record.statement_date
+      c << record.earned_date
+      sheet.row(1 + i).replace c
+    end
+    len = [10, 20, 20, 20, 20, 20]
+    len.each_with_index do |col, i|
+      sheet.column(i).width = col
+    end
+    code = SecureRandom.hex 
+    file = "#{Rails.root}/public/tmp/files/#{code}.xls"
+    File.open(file, "w") {}
+    book.write file
+    send_file file, type: 'application/vnd.ms-excel', x_sendfile: true
+  end
+
   # POST /commissions
   def create
     @commission = Commission.new(commission_params)

@@ -13,6 +13,9 @@ gem 'bower-rails', '~> 0.10.0'
 gem 'angular-rails-templates'
 gem 'bcrypt'
 gem 'font-awesome-rails'
+gem 'spreadsheet'
+gem 'prawn'
+gem 'prawn-table'
 
 group :development, :test do
   gem 'byebug'

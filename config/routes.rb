@@ -5,9 +5,15 @@ Rails.application.routes.draw do
       get 'current', on: :collection 
     end
     resources :policies
-    resources :clients
+    resources :clients do
+      get 'pdf', on: :collection
+      get 'xls', on: :collection
+    end
     resources :agencies
-    resources :commissions
+    resources :commissions do
+      get 'pdf', on: :collection
+      get 'xls', on: :collection
+    end
   end
   root 'static#index'
   match '*path', to: 'static#index', via: :all
