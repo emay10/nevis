@@ -23,7 +23,6 @@ class ClientsController < ApplicationController
       cols = [
         'ID',
         'Name',
-        'Email',
         'Quantity',
         'Status',
         'Policy',
@@ -36,7 +35,6 @@ class ClientsController < ApplicationController
         c = []
         c << record.id
         c << record.name
-        c << record.email
         c << record.quantity
         c << record.status
         if record.policy
@@ -65,7 +63,6 @@ class ClientsController < ApplicationController
     cols = [
       'ID',
       'Name',
-      'Email',
       'Quantity',
       'Status',
       'Policy',
@@ -77,7 +74,6 @@ class ClientsController < ApplicationController
       c = []
       c << record.id
       c << record.name
-      c << record.email
       c << record.quantity
       c << record.status
       if record.policy
@@ -131,6 +127,6 @@ class ClientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def client_params
-      params.require(:client).permit(:name, :number, :status, :email, :quantity, :policy_id, :user_id)
+      params.require(:client).permit(:name, :number, :status, :quantity, :policy_id, :user_id)
     end
 end

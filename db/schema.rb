@@ -15,19 +15,21 @@ ActiveRecord::Schema.define(version: 20160410073815) do
 
   create_table "agencies", force: :cascade do |t|
     t.string   "name"
+    t.text     "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "clients", force: :cascade do |t|
     t.string   "name"
-    t.integer  "quantity",   default: 0, null: false
+    t.integer  "quantity",       default: 1, null: false
     t.integer  "policy_id"
     t.integer  "user_id"
-    t.integer  "status"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.string   "email"
+    t.integer  "status",         default: 1, null: false
+    t.text     "notes"
+    t.date     "effective_date"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "clients", ["policy_id"], name: "index_clients_on_policy_id"

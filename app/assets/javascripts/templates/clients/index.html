@@ -1,21 +1,23 @@
 <div class="row page-title clients-title">
-  <div class="col-xs-4 col-xs-offset-2">
+  <div class="col-xs-4 col-xs-offset-1">
     <h2>Clients</h2>
   </div>
-  <div class="col-xs-3 col-xs-offset-1 text-right">
+  <div class="col-xs-3 col-xs-offset-3 text-right">
     <a class="btn btn-success" role="button" data-ui-sref="auth.clients.new">Add Client</a>
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-8 col-xs-offset-2">
+  <div class="col-xs-10 col-xs-offset-1">
     <table class="table table-striped table-hover" data-ts-wrapper>
       <thead>
         <th data-ts-criteria="id" data-ts-default>ID</th>
         <th data-ts-criteria="name">Name</th>
-        <th data-ts-criteria="email">Email</th>
-        <th data-ts-criteria="quantity">Quantity</th>
-        <th data-ts-criteria="status">Status</th>
+        <th data-ts-criteria="user">Agent</th>
         <th data-ts-criteria="policy.name">Policy</th>
+        <th data-ts-criteria="quantity">Quantity</th>
+        <th data-ts-criteria="effective_date">Effective date</th>
+        <th data-ts-criteria="status">Status</th>
+        <th data-ts-criteria="notes">Notes</th>
         <th></th>
       </thead>
       <tbody>
@@ -27,16 +29,22 @@
             {{client.name}}
           </td>
           <td>
-            {{client.email}}
+            {{client.user.name}}
+          </td>
+          <td>
+            {{client.policy.name}}
           </td>
           <td>
             {{client.quantity}}
           </td>
           <td>
+            {{client.created_at|date:'d-MMM-yyyy'}}
+          </td>
+          <td>
             {{client.status}}
           </td>
           <td>
-            {{client.policy.name}}
+            {{client.notes}}
           </td>
           <td>
             <a class="btn btn-xs btn-primary" data-ui-sref="auth.clients.edit({id: client.id})"><i class="fa fa-pencil"></i></a>

@@ -1,28 +1,35 @@
 <div class="row page-title clients-title">
-  <div class="col-xs-2 col-xs-offset-2">
+  <div class="col-xs-2">
     <h2>Commissions</h2>
   </div>
-  <div class="col-xs-3 col-xs-offset-3 text-right">
+  <div class="col-xs-3 col-xs-offset-7 text-right">
     <a class="btn btn-success" role="button" data-ui-sref="auth.commissions.import">Import</a>
     <a class="btn btn-success" role="button" data-ui-sref="auth.commissions.new">Add Commission</a>
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-8 col-xs-offset-2">
+  <div class="col-xs-12">
     <table class="table table-striped table-hover" data-ts-wrapper>
       <thead>
         <th data-ts-criteria="id" data-ts-default>ID</th>
+        <th data-ts-criteria="user.name">Agent</th>
+        <th data-ts-criteria="policy.carrier">Carrier</th>
         <th data-ts-criteria="client.name">Client</th>
         <th data-ts-criteria="policy.name">Policy</th>
-        <th data-ts-criteria="user.name">Agent</th>
         <th data-ts-criteria="user.statement_date">Statement Month</th>
         <th data-ts-criteria="user.earned_date">Earned Month</th>
-        <!--<th data-ts-criteria="amount|parseInt">Commission</th>-->
+        <th data-ts-criteria="amount|parseInt">Commission</th>
       </thead>
       <tbody>
         <tr data-ng-repeat="commission in commissions" data-ts-repeat>
           <td>
             {{commission.id}}
+          </td>
+          <td>
+            {{commission.user.name}}
+          </td>
+          <td>
+            {{commission.policy.carrier}}
           </td>
           <td>
             {{commission.client.name}}
@@ -31,13 +38,13 @@
             {{commission.policy.name}}
           </td>
           <td>
-            {{commission.user.name}}
+            {{commission.statement_date|date:'MMM yyyy'}}
           </td>
           <td>
-            {{commission.statement_date}}
+            {{commission.earned_date|date:'MMM yyyy'}}
           </td>
           <td>
-            {{commission.earned_date}}
+            {{commission.commission}}
           </td>
           <td>
             <a class="btn btn-xs btn-primary" data-ui-sref="auth.commissions.edit({id: commission.id})"><i class="fa fa-pencil"></i></a>
