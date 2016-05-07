@@ -62,3 +62,28 @@ angular
             $state.go 'auth.commissions.index'
 
   ]
+
+  .controller 'commissionsImportController', [
+    '$scope'
+    '$state'
+    '$stateParams'
+    'Commission'
+    'Upload'
+    ($scope, $state, $stateParams, Commission, Upload) ->
+      $scope.init = true
+      $scope.processing = false
+      $scope.upload = (file) ->
+        Upload.upload(
+          url: 'api/commissions/import',
+          data: {file: file}
+        ).then(
+          (resp) -> $state.go 'auth.commissions.index', 
+          (resp) -> $scope.text = 'Error status: ' + resp.status,
+          (evt) ->
+            $scope.init = false
+            progressPercentage = parseInt(100.0 * evt.loaded / evt.total)
+            $scope.text = 'Upload progress: ' + progressPercentage + '% '
+        )
+  ]
+
+

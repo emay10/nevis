@@ -8,3 +8,18 @@ body
   color: red;
   margin-bottom: 25px;
 }
+
+.drop-box
+{
+  background: #F8F8F8;
+  border: 5px dashed #DDD;
+  text-align: center;
+  padding: 100px 10px;
+  margin-top: 30px;
+  font-size: 20px;
+
+  &.dragover
+  {
+    border-color: #aaa;
+  }
+}

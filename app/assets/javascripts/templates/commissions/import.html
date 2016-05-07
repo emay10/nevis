@@ -1,0 +1,23 @@
+<div class="row page-title clients-title">
+  <div class="col-xs-2 col-xs-offset-2">
+    <h2>Import</h2>
+  </div>
+  <div class="col-xs-3 col-xs-offset-3 text-right">
+    <a class="btn btn-primary" role="button" data-ui-sref="auth.commissions.index">Commissions &rarr;</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-8 col-xs-offset-2">
+    <div
+      ngf-drop="upload($files)"
+      class="drop-box"
+      ngf-drag-over-class="'dragover'"
+      ngf-multiple="true" 
+      ngf-pattern="'image/*,application/pdf,text/csv'"
+    >
+      <div data-ng-show="init">Drop file here</div>
+      {{ text }}
+    </div>
+    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+  </div>
+</div>

@@ -7,6 +7,7 @@
     "ui-router": "latest",
     "angular-resource": "latest",
     "angular-bootstrap": "latest",
-    "angular-tablesort": "latest"
+    "angular-tablesort": "latest",
+    "ng-file-upload": "latest"
   }
 }

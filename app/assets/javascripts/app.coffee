@@ -2,7 +2,7 @@ angular.module 'nscom', [
   'ui.router'
   'ngResource'
   'satellizer'
-  #'angularFileUpload'
+  'ngFileUpload'
   'ui.bootstrap'
   'tableSort'
   'nscom.controllers.users'
@@ -115,7 +115,6 @@ angular.module 'nscom'
           url: '/clients'
           templateUrl: 'clients/index.html'
           controller: 'clientsIndexController'
-
         .state 'auth.policies',
           abstract: true
           template: '<ui-view/>'
@@ -138,6 +137,10 @@ angular.module 'nscom'
           url: '/commissions/:id/edit'
           templateUrl: 'commissions/edit.html'
           controller: 'commissionsEditController'
+        .state 'auth.commissions.import',
+          url: '/commissions/import'
+          templateUrl: 'commissions/import.html'
+          controller: 'commissionsImportController'
         .state 'auth.commissions.new',
           url: '/commissions/new'
           templateUrl: 'commissions/new.html'

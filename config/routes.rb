@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :commissions do
       get 'pdf', on: :collection
       get 'xls', on: :collection
+      post 'import', on: :collection
     end
   end
   root 'static#index'

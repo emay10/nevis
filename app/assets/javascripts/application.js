@@ -19,6 +19,7 @@
 //= require angular-bootstrap
 //= require angular-tablesort
 //= require satellizer
+//= require ng-file-upload
 //= require angular-rails-templates
 //= require_tree ./templates
 //= require app

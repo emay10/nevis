@@ -10,6 +10,28 @@ class CommissionsController < ApplicationController
   def show
   end
 
+  def import
+    require 'csv'
+    require 'securerandom'
+    file = params[:file]['0']
+    if file and file.content_type == 'text/csv'
+      CSV.foreach(file.path, headers: true) do |row|
+        u = User.where(name: row['Agent']).first_or_initialize
+        if u.email.blank?
+          u.email = "#{SecureRandom.hex}@example.com"
+        end
+        u.save(validate: false)
+        p = Policy.where(name: row['Policy'], carrier: row['Carrier']).first_or_create
+        c = Client.where(name: row['Client'], policy: p, user: u).first_or_create
+        com = Commission.new(client: c)
+        com.statement_date = Date.parse(row['Statement Date'])
+        com.earned_date = Date.parse(row['Earned Month'])
+        com.save
+      end
+    end
+    render status: :ok, nothing: true
+  end
+
   def pdf
     require 'prawn'
     require 'securerandom'
