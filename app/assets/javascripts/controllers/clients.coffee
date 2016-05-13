@@ -7,13 +7,36 @@ angular
     '$stateParams'
     'Client'
     ($scope, $state, $stateParams, Client) ->
+      $scope.search =
+        field: ''
+        query: ''
       $scope.remove = (id) ->
         client = new Client(id: id)
         if client
           client.$remove id: id, ->
             $scope.clients = $scope.clients.filter (e) -> e.id != id
       Client.query (res) ->
+        $scope.original = res
         $scope.clients = res
+      $scope.filter = ->
+        search = $scope.search
+        if search.field.length > 0 and search.query.length > 0
+          $scope.clients = $scope.original.filter (e) ->
+            nested = search.field.indexOf('.') != -1
+            if nested
+              keys = search.field.split('.')
+              ob = e[keys[0]]
+              if ob
+                val = ob[keys[1]]
+              else
+                val = false
+            else
+              val = e[search.field]
+            if val
+              val = String(val).toLowerCase()
+              val.indexOf(search.query.toLowerCase()) != -1
+        else
+          $scope.clients = $scope.original
   ]
 
   .controller 'clientsNewController', [

@@ -2,7 +2,23 @@
   <div class="col-xs-2">
     <h2>Commissions</h2>
   </div>
-  <div class="col-xs-3 col-xs-offset-7 text-right">
+  <div class="col-xs-4 col-xs-offset-3">
+    <form class="form-inline">
+      <select class="form-control" data-ng-model="search.field" data-ng-change="filter()">
+        <option value="">Field</option>
+        <option value="id">ID</option>
+        <option value="user.name">Agent</option>
+        <option value="policy.carrier">Carrier</option>
+        <option value="client.name">Client</option>
+        <option value="policy.kind">Policy</option>
+        <option value="statement_date">Statement Month</option>
+        <option value="earned_date">Earned Date</option>
+        <option value="commission">Commission</option>
+      </select>
+      <input type="text" class="form-control" placeholder="Search" data-ng-model="search.query" data-ng-change="filter()">
+    </form>
+  </div>
+  <div class="col-xs-3  text-right">
     <a class="btn btn-success" role="button" data-ui-sref="auth.commissions.import">Import</a>
     <a class="btn btn-success" role="button" data-ui-sref="auth.commissions.new">Add Commission</a>
   </div>
@@ -15,9 +31,9 @@
         <th data-ts-criteria="user.name">Agent</th>
         <th data-ts-criteria="policy.carrier">Carrier</th>
         <th data-ts-criteria="client.name">Client</th>
-        <th data-ts-criteria="policy.name">Policy</th>
-        <th data-ts-criteria="user.statement_date">Statement Month</th>
-        <th data-ts-criteria="user.earned_date">Earned Month</th>
+        <th data-ts-criteria="policy.kind">Policy</th>
+        <th data-ts-criteria="statement_date">Statement Month</th>
+        <th data-ts-criteria="earned_date">Earned Month</th>
         <th data-ts-criteria="amount|parseInt">Commission</th>
       </thead>
       <tbody>
@@ -35,7 +51,7 @@
             {{commission.client.name}}
           </td>
           <td>
-            {{commission.policy.name}}
+            {{commission.policy.kind}}
           </td>
           <td>
             {{commission.statement_date|date:'MMM yyyy'}}

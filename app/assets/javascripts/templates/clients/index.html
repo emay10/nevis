@@ -2,7 +2,24 @@
   <div class="col-xs-4 col-xs-offset-1">
     <h2>Clients</h2>
   </div>
-  <div class="col-xs-3 col-xs-offset-3 text-right">
+  <div class="col-xs-4">
+    <form class="form-inline">
+      <select class="form-control" data-ng-model="search.field" data-ng-change="filter()">
+        <option value="">Field</option>
+        <option value="id">ID</option>
+        <option value="name">Name</option>
+        <option value="user.name">Agent</option>
+        <option value="policy.carrier">Carrier</option>
+        <option value="policy.kind">Policy</option>
+        <option value="quantity">Quantity</option>
+        <option value="created_at">Effective Date</option>
+        <option value="status">Status</option>
+        <option value="notes">Notes</option>
+      </select>
+      <input type="text" class="form-control" placeholder="Search" data-ng-model="search.query" data-ng-change="filter()">
+    </form>
+  </div>
+  <div class="col-xs-2 text-right">
     <a class="btn btn-success" role="button" data-ui-sref="auth.clients.new">Add Client</a>
   </div>
 </div>
@@ -12,10 +29,11 @@
       <thead>
         <th data-ts-criteria="id" data-ts-default>ID</th>
         <th data-ts-criteria="name">Name</th>
-        <th data-ts-criteria="user">Agent</th>
-        <th data-ts-criteria="policy.name">Policy</th>
+        <th data-ts-criteria="user.name">Agent</th>
+        <th data-ts-criteria="policy.carrier">Carrier</th>
+        <th data-ts-criteria="policy.kind">Policy</th>
         <th data-ts-criteria="quantity">Quantity</th>
-        <th data-ts-criteria="effective_date">Effective date</th>
+        <th data-ts-criteria="created_at">Effective date</th>
         <th data-ts-criteria="status">Status</th>
         <th data-ts-criteria="notes">Notes</th>
         <th></th>
@@ -32,7 +50,10 @@
             {{client.user.name}}
           </td>
           <td>
-            {{client.policy.name}}
+            {{client.policy.carrier}}
+          </td>
+          <td>
+            {{client.policy.kind}}
           </td>
           <td>
             {{client.quantity}}

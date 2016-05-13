@@ -7,6 +7,9 @@ angular
     '$stateParams'
     'Commission'
     ($scope, $state, $stateParams, Commission) ->
+      $scope.search =
+        field: ''
+        query: ''
       $scope.remove = (id) ->
         commission = new Commission(id: id)
         if commission
@@ -14,7 +17,28 @@ angular
             $scope.commissions = $scope.commissions.filter (e) -> e.id != id
 
       Commission.query (res) ->
+        $scope.original = res
         $scope.commissions = res
+      $scope.filter = ->
+        search = $scope.search
+        if search.field.length > 0 and search.query.length > 0
+          $scope.commissions = $scope.original.filter (e) ->
+            nested = search.field.indexOf('.') != -1
+            if nested
+              keys = search.field.split('.')
+              ob = e[keys[0]]
+              if ob
+                val = ob[keys[1]]
+              else
+                val = false
+            else
+              val = e[search.field]
+            if val
+              val = String(val).toLowerCase()
+              val.indexOf(search.query.toLowerCase()) != -1
+        else
+          $scope.commissions = $scope.original
+
   ]
 
   .controller 'commissionsNewController', [
