@@ -45,9 +45,10 @@ class CommissionsController < ApplicationController
       move_down 20
       cols = [
         'ID',
+        'Agent',
+        'Carrier',
         'Client',
         'Policy',
-        'Agent',
         'Statement Month',
         'Earned Month',
       ]
@@ -58,18 +59,23 @@ class CommissionsController < ApplicationController
       records.each do |record|
         c = []
         c << record.id
+        if record.client.user
+          c << record.client.user.name 
+        else
+          c << ''
+        end
+        if record.client.policy
+          c << record.client.policy.carrier
+        else
+          c << ''
+        end
         if record.client
           c << record.client.name 
         else
           c << ''
         end
         if record.client.policy
-          c << record.client.policy.name 
-        else
-          c << ''
-        end
-        if record.client.user
-          c << record.client.user.name 
+          c << record.client.policy.kind
         else
           c << ''
         end
@@ -92,12 +98,12 @@ class CommissionsController < ApplicationController
     sheet = book.create_worksheet
     bold = Spreadsheet::Format.new weight: :bold
 
-    #sheet.row(0).push "Commissions"
     cols = [
       'ID',
+      'Agent',
+      'Carrier',
       'Client',
       'Policy',
-      'Agent',
       'Statement Month',
       'Earned Month',
     ]
@@ -107,18 +113,23 @@ class CommissionsController < ApplicationController
     records.each_with_index do |record, i|
       c = []
       c << record.id
+      if record.client.user
+        c << record.client.user.name 
+      else
+        c << ''
+      end
+      if record.client.policy
+        c << record.client.policy.carrier
+      else
+        c << ''
+      end
       if record.client
         c << record.client.name 
       else
         c << ''
       end
       if record.client.policy
-        c << record.client.policy.name 
-      else
-        c << ''
-      end
-      if record.client.user
-        c << record.client.user.name 
+        c << record.client.policy.kind
       else
         c << ''
       end
