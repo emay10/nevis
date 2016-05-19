@@ -23,9 +23,12 @@ class ClientsController < ApplicationController
       cols = [
         'ID',
         'Name',
-        'Quantity',
-        'Status',
+        'Agent',
+        'Carrier',
         'Policy',
+        'Quantity',
+        'Effective Date',
+        'Status',
       ]
       data = [cols]
       length = 0
@@ -35,13 +38,20 @@ class ClientsController < ApplicationController
         c = []
         c << record.id
         c << record.name
-        c << record.quantity
-        c << record.status
-        if record.policy
-          c << record.policy.name 
+        if record.user
+          c << record.user.name
         else
           c << ''
         end
+        if record.policy
+          c << record.policy.carrier
+          c << record.policy.kind
+        else
+          c << ''
+        end
+        c << record.quantity
+        c << record.effective_date
+        c << record.status
         data << c
         length = c.length
       end
@@ -63,9 +73,12 @@ class ClientsController < ApplicationController
     cols = [
       'ID',
       'Name',
-      'Quantity',
-      'Status',
+      'Agent',
+      'Carrier',
       'Policy',
+      'Quantity',
+      'Effective Date',
+      'Status',
     ]
     sheet.row(0).replace cols
     sheet.row(0).default_format = bold
@@ -74,13 +87,20 @@ class ClientsController < ApplicationController
       c = []
       c << record.id
       c << record.name
-      c << record.quantity
-      c << record.status
-      if record.policy
-        c << record.policy.name 
+      if record.user
+        c << record.user.name
       else
         c << ''
       end
+      if record.policy
+        c << record.policy.carrier
+        c << record.policy.kind
+      else
+        c << ''
+      end
+      c << record.quantity
+      c << record.effective_date
+      c << record.status
       sheet.row(1 + i).replace c
     end
     len = [10, 20, 20, 20, 20, 20]
