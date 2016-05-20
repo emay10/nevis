@@ -1,6 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
+
 body
 {
   padding-top: 70px;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-weight: 300;
 }
 
 .errors
@@ -21,5 +25,68 @@ body
   &.dragover
   {
     border-color: #aaa;
+  }
+}
+
+.navbar-default
+{
+  background-color: #333;
+  border-color: #333;
+  border: 0;
+
+  .navbar-brand
+  {
+    color: #efefef;
+  }
+
+  .navbar-brand:hover,
+  .navbar-brand:focus
+  {
+    color: #fff;
+  }
+
+  .navbar-nav > li > a
+  {
+    color: #eee;
+  }
+
+  .navbar-nav > li > a:hover,
+  .navbar-nav > li > a:focus
+  {
+    color: #fff;
+  }
+
+  .navbar-nav > .open > a,
+  .navbar-nav > .open > a:hover,
+  .navbar-nav > .open > a:focus
+  {
+    background: #666;
+    color: #fff;
+  }
+
+  .dropdown-menu
+  {
+    background: #666;
+  }
+
+  .dropdown-menu > li > a
+  {
+    color: #fff;
+  }
+
+  .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus
+  {
+    background: #999;
+  }
+
+  .navbar-nav > .active 
+  {
+    & > a,
+    & > a:hover,
+    & > a:focus
+    {
+      color: #fff;
+      background-color: #666;
+    }
   }
 }

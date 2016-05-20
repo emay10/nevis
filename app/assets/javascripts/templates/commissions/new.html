@@ -16,10 +16,12 @@
         </select>
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Statement month" data-ng-model="form.statement_date" data-ng-required="true">
+        <label for="statement_date">Statement Month</label>
+        <input id="statement_date" type="text" class="form-control" placeholder="Statement Month" data-ng-model="form.statement_date" data-ng-required="true">
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Earned month" data-ng-model="form.earned_date" data-ng-required="true">
+        <label for="earned_date">Earned Month</label>
+        <input id="earned_date" type="text" class="form-control" placeholder="Earned Month" data-ng-model="form.earned_date" data-ng-required="true">
       </div>
       <button type="submit" class="btn btn-primary" data-ng-disabled="processing">Create</button>
     </form>

@@ -21,13 +21,21 @@ class CommissionsController < ApplicationController
           u.email = "#{SecureRandom.hex}@example.com"
         end
         u.save(validate: false)
-        val = row['Commission Amount'].gsub('$', '')
-        #, commission: val
-        p = Policy.where(name: row['Policy'], carrier: row['Carrier']).first_or_create
+        type = row['Policy Type']
+        kind = (type and type === 'Medicare Supp') ? 'medicare' : type.downcase
+        p = Policy.where(carrier: row['Carrier'], kind: kind).first_or_create
         c = Client.where(name: row['Client'], policy: p, user: u).first_or_create
         com = Commission.new(client: c)
         com.statement_date = Date.parse(row['Statement Date'])
         com.earned_date = Date.parse(row['Earned Month'])
+        unless row['Commission Basis'].blank?
+          if p.kind === 'medicare'
+            val = row['Commission Basis'].gsub('$', '')
+            #com.commission = val
+          else
+            #com.commission = p.commission.to_i * row['Commission Basis'].to_i
+          end
+        end
         com.save
       end
     end
