@@ -48,7 +48,7 @@ angular
     'Commission'
     'Client'
     ($scope, $state, $stateParams, Commission, Client) ->
-      $scope.form = new Commission(client_id: '', policy_id: '', user_id: '', amount: '')
+      $scope.form = new Commission(client_id: '', policy_id: '', user_id: '', commission: '')
       $scope.processing = false
       $scope.init = true
       Client.query (res) ->

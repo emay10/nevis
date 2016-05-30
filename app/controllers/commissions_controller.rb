@@ -35,9 +35,9 @@ class CommissionsController < ApplicationController
         unless row['Commission Basis'].blank?
           if p.kind === 'medicare'
             val = row['Commission Basis'].gsub('$', '')
-            #com.commission = val
+            com.commission = val
           else
-            #com.commission = p.commission.to_i * row['Commission Basis'].to_i
+            com.commission = p.commission.to_i * row['Commission Basis'].to_i
           end
         end
         skipped += 1
@@ -195,6 +195,6 @@ class CommissionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def commission_params
-      params.require(:commission).permit(:statement_date, :earned_date, :client_id)
+      params.permit(:commission, :statement_date, :earned_date, :client_id)
     end
 end

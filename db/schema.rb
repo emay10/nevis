@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160410073815) do
+ActiveRecord::Schema.define(version: 20160530224359) do
 
   create_table "agencies", force: :cascade do |t|
     t.string   "name"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20160410073815) do
     t.integer "client_id"
     t.date    "statement_date"
     t.date    "earned_date"
+    t.integer "commission"
   end
 
   add_index "commissions", ["client_id"], name: "index_commissions_on_client_id"
