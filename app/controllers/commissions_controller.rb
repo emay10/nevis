@@ -15,7 +15,10 @@ class CommissionsController < ApplicationController
     require 'securerandom'
     file = params[:file]['0']
     if file and file.content_type == 'text/csv'
+      total = 0
+      skipped = 0
       CSV.foreach(file.path, headers: true) do |row|
+        total += 1
         u = User.where(name: row['Agent']).first_or_initialize
         if u.email.blank?
           u.email = "#{SecureRandom.hex}@example.com"
@@ -23,7 +26,8 @@ class CommissionsController < ApplicationController
         u.save(validate: false)
         type = row['Policy Type']
         kind = (type and type === 'Medicare Supp') ? 'medicare' : type.downcase
-        p = Policy.where(carrier: row['Carrier'], kind: kind).first_or_create
+        p = Policy.where(carrier: row['Carrier'], kind: kind).first
+        next unless p
         c = Client.where(name: row['Client'], policy: p, user: u).first_or_create
         com = Commission.new(client: c)
         com.statement_date = Date.parse(row['Statement Date'])
@@ -36,6 +40,7 @@ class CommissionsController < ApplicationController
             #com.commission = p.commission.to_i * row['Commission Basis'].to_i
           end
         end
+        skipped += 1
         com.save
       end
     end
