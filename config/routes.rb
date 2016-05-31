@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   mount Knock::Engine => '/api/auth'
   scope :api, constraints: { format: 'json' } do
+    resources :statements
     resources :users do
       get 'current', on: :collection 
     end

@@ -109,5 +109,3 @@ angular
             $scope.text = 'Upload progress: ' + progressPercentage + '% '
         )
   ]
-
-

@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3">
+    <div class="page-title">
+      <h2>Generate Statement</h2>
+    </div>
+    <form name="statement" data-ng-submit="submit()">
+      <div class="errors" ng-show="errors.length > 0">
+        <div data-ng-repeat="error in errors">
+          {{ error }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="user">Agent</label>
+        <select class="form-control" data-ng-model="form.user_id" id="user" data-ng-required="true">
+          <option data-ng-repeat="option in users" value="{{option.id}}">{{option.name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="date">Statement Month</label>
+        <input id="date" type="text" class="form-control" placeholder="Statement Month" data-ng-model="form.date" data-ng-required="true">
+      </div>
+      <button type="submit" class="btn btn-primary" data-ng-disabled="processing">Create</button>
+    </form>
+  </div>
+</div>

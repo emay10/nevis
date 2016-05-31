@@ -8,6 +8,7 @@ angular.module 'nscom', [
   'nscom.controllers.users'
   'nscom.controllers.clients'
   'nscom.controllers.commissions'
+  'nscom.controllers.statements'
   'nscom.controllers.policies'
   'nscom.controllers.static'
   'nscom.factories.users'
@@ -149,6 +150,21 @@ angular.module 'nscom'
           url: '/commissions'
           templateUrl: 'commissions/index.html'
           controller: 'commissionsIndexController'
+        .state 'auth.statements',
+          abstract: true
+          template: '<ui-view/>'
+        .state 'auth.statements.new',
+          url: '/statements/new'
+          templateUrl: 'statements/new.html'
+          controller: 'statementsNewController'
+        .state 'auth.statements.show',
+          url: '/statements/:id'
+          templateUrl: 'statements/show.html'
+          controller: 'statementsShowController'
+        .state 'auth.statements.index',
+          url: '/statements'
+          templateUrl: 'statements/index.html'
+          controller: 'statementsIndexController'
         .state 'auth.agencies',
           abstract: true
           template: '<ui-view/>'

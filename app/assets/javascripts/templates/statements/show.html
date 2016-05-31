@@ -1,0 +1,77 @@
+<div class="row page-title clients-title">
+  <div class="col-xs-2">
+    <h2>Statement</h2>
+  </div>
+  <div class="col-xs-4 col-xs-offset-3">
+    <form class="form-inline">
+      <select class="form-control" data-ng-model="search.field" data-ng-change="filter()">
+        <option value="">Field</option>
+        <option value="id">ID</option>
+        <option value="user.name">Agent</option>
+        <option value="policy.carrier">Carrier</option>
+        <option value="client.name">Client</option>
+        <option value="policy.kind">Policy</option>
+        <option value="statement_date">Statement Month</option>
+        <option value="earned_date">Earned Date</option>
+        <option value="commission">Commission</option>
+      </select>
+      <input type="text" class="form-control" placeholder="Search" data-ng-model="search.query" data-ng-change="filter()">
+    </form>
+  </div>
+  <div class="col-xs-3  text-right">
+    <a class="btn btn-success" role="button" data-ui-sref="auth.commissions.import">Import</a>
+    <a class="btn btn-success" role="button" data-ui-sref="auth.commissions.new">Add Commission</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <table class="table table-striped table-hover" data-ts-wrapper>
+      <thead>
+        <th data-ts-criteria="id" data-ts-default>ID</th>
+        <th data-ts-criteria="user.name">Agent</th>
+        <th data-ts-criteria="policy.carrier">Carrier</th>
+        <th data-ts-criteria="client.name">Client</th>
+        <th data-ts-criteria="policy.kind">Policy</th>
+        <th data-ts-criteria="statement_date">Statement Month</th>
+        <th data-ts-criteria="earned_date">Earned Month</th>
+        <th data-ts-criteria="commission|parseInt">Commission</th>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="commission in commissions" data-ts-repeat>
+          <td>
+            {{commission.id}}
+          </td>
+          <td>
+            {{commission.user.name}}
+          </td>
+          <td>
+            {{commission.policy.carrier}}
+          </td>
+          <td>
+            {{commission.client.name}}
+          </td>
+          <td>
+            {{commission.policy.kind}}
+          </td>
+          <td>
+            {{commission.statement_date|date:'MMM yyyy'}}
+          </td>
+          <td>
+            {{commission.earned_date|date:'MMM yyyy'}}
+          </td>
+          <td>
+            {{commission.commission}}
+          </td>
+          <td>
+            <a class="btn btn-xs btn-primary" data-ui-sref="auth.commissions.edit({id: commission.id})"><i class="fa fa-pencil"></i></a>
+            <a class="btn btn-xs btn-danger" data-ng-click="remove(commission.id)"><i class="fa fa-times"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <footer class="text-right">
+      <a class="btn btn-sm btn-primary" target="_self" href="api/commissions/pdf">Export to PDF</a>
+      <a class="btn btn-sm btn-primary" target="_self" href="api/commissions/xls">Export to XLS</a>
+    </footer>
+  </div>
+</div>
