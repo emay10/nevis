@@ -24,7 +24,7 @@ angular
     'User'
     ($scope, $state, $stateParams, Statement, User) ->
       $scope.users = User.query()
-      $scope.form = new Statement(user_id: '', date: '')
+      $scope.form = new Statement(user_id: '', month: '', year: '')
       $scope.processing = false
       $scope.init = true
       $scope.submit = ->
