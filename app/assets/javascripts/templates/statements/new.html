@@ -11,13 +11,27 @@
       </div>
       <div class="form-group">
         <label for="user">Agent</label>
-        <select class="form-control" data-ng-model="form.user_id" id="user" data-ng-required="true">
-          <option data-ng-repeat="option in users" value="{{option.id}}">{{option.name}}</option>
-        </select>
+        <div class="checkbox" data-ng-repeat="option in users">
+          <label>
+            <input type="checkbox" value="{{option.id}}">{{option.name}}
+          </label>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="date">Statement Month</label>
-        <input id="date" type="text" class="form-control" placeholder="Statement Month" data-ng-model="form.date" data-ng-required="true">
+      <div class="form-inline date-field">
+        <div class="form-group">
+          <div>
+            <label>Statement Month</label>
+          </div>
+          <select class="form-control">
+            <option>month</option>
+          </select>
+          <select class="form-control">
+            <option>date</option>
+          </select>
+          <select class="form-control">
+            <option>year</option>
+          </select>
+        </div>
       </div>
       <button type="submit" class="btn btn-primary" data-ng-disabled="processing">Create</button>
     </form>
