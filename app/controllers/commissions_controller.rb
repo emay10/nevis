@@ -64,6 +64,7 @@ class CommissionsController < ApplicationController
         'Policy',
         'Statement Month',
         'Earned Month',
+        'Commission'
       ]
       data = [cols]
       length = 0
@@ -92,8 +93,9 @@ class CommissionsController < ApplicationController
         else
           c << ''
         end
-        c << record.statement_date
-        c << record.earned_date
+        c << record.statement_date.strftime('%m-%d-%Y')
+        c << record.earned_date.strftime('%m-%d-%Y')
+        c << record.commission
         data << c
         length = c.length
       end
@@ -146,8 +148,8 @@ class CommissionsController < ApplicationController
       else
         c << ''
       end
-      c << record.statement_date
-      c << record.earned_date
+      c << record.statement_date.strftime('%m-%d-%Y')
+      c << record.earned_date.strftime('%m-%d-%Y')
       sheet.row(1 + i).replace c
     end
     len = [10, 20, 20, 20, 20, 20]
