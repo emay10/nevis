@@ -35,7 +35,10 @@ angular
               val = e[search.field]
             if val
               val = String(val).toLowerCase()
-              val.indexOf(search.query.toLowerCase()) != -1
+              if search.field == 'id'
+                val == search.query
+              else
+                val.indexOf(search.query.toLowerCase()) != -1
         else
           $scope.commissions = $scope.original
 
