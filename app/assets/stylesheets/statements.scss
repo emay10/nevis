@@ -7,3 +7,21 @@
     //margin: 0 3%;
   }
 }
+
+.statement-summary
+{
+  td
+  {
+    padding: 5px;
+  }
+
+  td:first-child
+  {
+    font-weight: bold;
+  }
+
+  td:last-child
+  {
+    text-align: center;
+  }
+}

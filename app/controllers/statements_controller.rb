@@ -1,5 +1,5 @@
 class StatementsController < ApplicationController
-  before_action :set_statement, only: [:show, :edit, :update, :destroy]
+  before_action :set_statement, only: [:show, :edit, :update, :destroy, :pdf, :xls]
 
   # GET /statements
   def index
@@ -8,6 +8,7 @@ class StatementsController < ApplicationController
 
   # GET /statements/1
   def show
+    @commissions = Commission.from_statement(@statement)
   end
 
   # POST /statements
@@ -38,6 +39,143 @@ class StatementsController < ApplicationController
   def destroy
     @statement.destroy
     render status: :ok, nothing: true
+  end
+
+  def pdf
+    require 'prawn'
+    require 'securerandom'
+    s = @statement
+    records = Commission.from_statement(s)
+    code = SecureRandom.hex 
+    file = "#{Rails.root}/public/tmp/files/#{code}.pdf"
+    Prawn::Document.generate(file, margin: 40) do
+      text("Statement for #{s.user.name}", align: :center)
+      move_down 20
+      cols = [
+        'ID',
+        'Agent',
+        'Carrier',
+        'Client',
+        'Policy',
+        'Statement Month',
+        'Earned Month',
+        'Commission'
+      ]
+      data = [cols]
+      length = 0
+      move_down 20
+      font_size 10
+      records.each do |record|
+        c = []
+        c << record.id
+        if record.client.user
+          c << record.client.user.name 
+        else
+          c << ''
+        end
+        if record.client.policy
+          c << record.client.policy.carrier
+        else
+          c << ''
+        end
+        if record.client
+          c << record.client.name 
+        else
+          c << ''
+        end
+        if record.client.policy
+          c << record.client.policy.kind
+        else
+          c << ''
+        end
+        c << record.statement_date.strftime('%m-%d-%Y')
+        c << record.earned_date.strftime('%m-%d-%Y')
+        c << record.commission
+        data << c
+        length = c.length
+      end
+      table(data, position: :center)
+      total_com = 1
+      agency_com = 1
+      agent_com = 1
+      carrier_com = 1
+      summary = [
+        ['Agent', s.user.name],
+        ['Statement Month', s.date],
+        ['Total Commissions Received', total_com],
+        ['Agency Commission', agency_com],
+        ['Total Agent Commissions', agent_com],
+        ['Commissions by Carrier', carrier_com],
+        ['Regence', 1],
+      ]
+      n_sum = []
+      summary.each do |row|
+        n_row = [{content: row[0], font_style: :bold}, {content: row[1].to_s, align: :center}]
+        n_sum << n_row
+      end
+      move_down 40
+      table(n_sum, position: :right, column_widths: [150, 200])
+      move_down 20
+    end
+    send_file file, type: 'application/pdf', x_sendfile: true
+  end
+
+  def xls
+    require 'spreadsheet'
+    require 'securerandom'
+    records = Commission.from_statement(@statement)
+    book = Spreadsheet::Workbook.new
+    sheet = book.create_worksheet
+    bold = Spreadsheet::Format.new weight: :bold
+
+    cols = [
+      'ID',
+      'Agent',
+      'Carrier',
+      'Client',
+      'Policy',
+      'Statement Month',
+      'Earned Month',
+    ]
+    sheet.row(0).replace cols
+    sheet.row(0).default_format = bold
+    length = 0
+    records.each_with_index do |record, i|
+      c = []
+      c << record.id
+      if record.client.user
+        c << record.client.user.name 
+      else
+        c << ''
+      end
+      if record.client.policy
+        c << record.client.policy.carrier
+      else
+        c << ''
+      end
+      if record.client
+        c << record.client.name 
+      else
+        c << ''
+      end
+      if record.client.policy
+        c << record.client.policy.kind
+      else
+        c << ''
+      end
+      c << record.statement_date.strftime('%m-%d-%Y')
+      c << record.earned_date.strftime('%m-%d-%Y')
+      sheet.row(1 + i).replace c
+    end
+    len = [10, 20, 20, 20, 20, 20]
+    len.each_with_index do |col, i|
+      sheet.column(i).width = col
+    end
+    code = SecureRandom.hex 
+    file = "#{Rails.root}/public/tmp/files/#{code}.xls"
+    File.open(file, "w") {}
+    book.write file
+    send_file file, type: 'application/vnd.ms-excel', x_sendfile: true
   end
 
   private

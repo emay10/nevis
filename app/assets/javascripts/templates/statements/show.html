@@ -44,14 +44,49 @@
             {{commission.earned_date|date:'MMM yyyy'}}
           </td>
           <td>
-            {{commission.commission}}
+            <span data-ng-show="commission.commission != 0">${{commission.commission}}</span>
+            <span data-ng-show="commission.commission == 0">-</span>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-offset-7 col-xs-5">
+    <table class="table statement-summary">
+      <tr>
+        <td>Agent:</td>
+        <td>{{statement.user.name}}</td>
+      </tr>
+      <tr>
+        <td>Statement Month:</td>
+        <td>{{statement.date}}</td>
+      </tr>
+      <tr>
+        <td>Total Commissions Received:</td>
+        <td>{{statement.total_coms}}</td>
+      </tr>
+      <tr>
+        <td>Agency Commission:</td>
+        <td>{{statement.total_coms}}</td>
+      </tr>
+      <tr>
+        <td>Total Agent Commissions:</td>
+        <td>{{statement.total_coms}}</td>
+      </tr>
+      <tr>
+        <td>Commissions by Carrier</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Regence:</td>
+        <td>{{statement.total_coms}}</td>
+      </tr>
+    </table>
     <footer class="text-right">
-      <!--<a class="btn btn-sm btn-primary" target="_self" href="api/commissions/pdf">Export to PDF</a>
-      <a class="btn btn-sm btn-primary" target="_self" href="api/commissions/xls">Export to XLS</a>-->
+      <a class="btn btn-sm btn-primary" target="_self" href="api/statements/{{statement.id}}/pdf">Export to PDF</a>
+      <a class="btn btn-sm btn-primary" target="_self" href="api/statements/{{statement.id}}/xls">Export to XLS</a>
     </footer>
   </div>
 </div>

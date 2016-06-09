@@ -3,7 +3,12 @@ class ClientsController < ApplicationController
 
   # GET /clients
   def index
-    @clients = Client.all
+    @clients = Client
+    unless params[:q].blank?
+      @clients = @clients.search(params[:q])
+    else
+      @clients = @clients.all
+    end
   end
 
   # GET /clients/1
