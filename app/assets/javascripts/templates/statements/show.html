@@ -18,7 +18,7 @@
       <input type="text" class="form-control" placeholder="Search" data-ng-model="search.query" data-ng-change="filter()">
     </form>
   </div>
-  <div class="col-xs-3  text-right">
+  <div class="col-xs-3 hidden text-right">
     <a class="btn btn-success" role="button" data-ui-sref="auth.commissions.import">Import</a>
     <a class="btn btn-success" role="button" data-ui-sref="auth.commissions.new">Add Commission</a>
   </div>
@@ -61,10 +61,6 @@
           </td>
           <td>
             {{commission.commission}}
-          </td>
-          <td>
-            <a class="btn btn-xs btn-primary" data-ui-sref="auth.commissions.edit({id: commission.id})"><i class="fa fa-pencil"></i></a>
-            <a class="btn btn-xs btn-danger" data-ng-click="remove(commission.id)"><i class="fa fa-times"></i></a>
           </td>
         </tr>
       </tbody>

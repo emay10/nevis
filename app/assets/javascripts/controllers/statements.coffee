@@ -43,3 +43,15 @@ angular
         else
           $scope.selection.push(id)
   ]
+
+  .controller 'statementsShowController', [
+    '$scope'
+    '$state'
+    '$stateParams'
+    'Statement'
+    ($scope, $state, $stateParams, Statement) ->
+      statement_id = $stateParams.id
+      Statement.get id: statement_id, (res) ->
+        $scope.statement = res
+        $scope.commissions = res.commissions
+  ]
