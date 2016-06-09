@@ -13,7 +13,13 @@
         <label for="user">Agent</label>
         <div class="checkbox" data-ng-repeat="option in users">
           <label>
-            <input type="checkbox" value="{{option.id}}">{{option.name}}
+            <input
+              type="checkbox"
+              name="users"
+              value="{{option.id}}"
+              ng-checked="selection.indexOf(option.id) > -1"
+              ng-click="toggleSelection(option.id)"
+              >{{option.name}}
           </label>
         </div>
       </div>

@@ -12,13 +12,17 @@ class StatementsController < ApplicationController
 
   # POST /statements
   def create
-    @statement = Statement.new(statement_params)
-
-    if @statement.save
-      render :show, status: :created, location: @statement
-    else
-      render json: @statement.errors, status: :unprocessable_entity
+    user_ids = statement_params[:users].split(',')
+    if user_ids.length > 0
+      users = User.where(id: user_ids)
+      if users and !statement_params[:year].blank? and !statement_params[:month].blank?
+        users.each do |u|
+          date = Date.new(statement_params[:year].to_i, statement_params[:month].to_i)
+          Statement.create(date: date, user: u)
+        end
+      end
     end
+    render status: :ok, nothing: true
   end
 
   # PATCH/PUT /statements/1
@@ -44,6 +48,6 @@ class StatementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def statement_params
-      params.require(:statement).permit(:user_id, :date)
+      params.permit(:users, :month, :year)
     end
 end
