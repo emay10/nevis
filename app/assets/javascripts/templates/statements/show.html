@@ -1,22 +1,6 @@
 <div class="row page-title clients-title">
-  <div class="col-xs-2">
-    <h2>Statement</h2>
-  </div>
-  <div class="col-xs-4 col-xs-offset-3">
-    <form class="form-inline">
-      <select class="form-control" data-ng-model="search.field" data-ng-change="filter()">
-        <option value="">Field</option>
-        <option value="id">ID</option>
-        <option value="user.name">Agent</option>
-        <option value="policy.carrier">Carrier</option>
-        <option value="client.name">Client</option>
-        <option value="policy.kind">Policy</option>
-        <option value="statement_date">Statement Month</option>
-        <option value="earned_date">Earned Date</option>
-        <option value="commission">Commission</option>
-      </select>
-      <input type="text" class="form-control" placeholder="Search" data-ng-model="search.query" data-ng-change="filter()">
-    </form>
+  <div class="col-xs-5">
+    <h2>Statement for <em>{{statement.user.name}}</em></h2>
   </div>
   <div class="col-xs-3 hidden text-right">
     <a class="btn btn-success" role="button" data-ui-sref="auth.commissions.import">Import</a>
@@ -66,8 +50,8 @@
       </tbody>
     </table>
     <footer class="text-right">
-      <a class="btn btn-sm btn-primary" target="_self" href="api/commissions/pdf">Export to PDF</a>
-      <a class="btn btn-sm btn-primary" target="_self" href="api/commissions/xls">Export to XLS</a>
+      <!--<a class="btn btn-sm btn-primary" target="_self" href="api/commissions/pdf">Export to PDF</a>
+      <a class="btn btn-sm btn-primary" target="_self" href="api/commissions/xls">Export to XLS</a>-->
     </footer>
   </div>
 </div>

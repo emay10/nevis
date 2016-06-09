@@ -1,4 +1,5 @@
 json.extract! @statement, :id, :user_id, :date, :created_at, :updated_at
+json.user @statement.user
 coms = Commission.from_statement(@statement)
 json.commissions coms do |commission|
   json.extract! commission, :id, :statement_date, :earned_date
