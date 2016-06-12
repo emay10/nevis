@@ -101,7 +101,7 @@ class StatementsController < ApplicationController
       carrier_com = 1
       summary = [
         ['Agent', s.user.name],
-        ['Statement Month', s.date],
+        ['Statement Month', s.date.strftime('%m-%d-%Y')],
         ['Total Commissions Received', total_com],
         ['Agency Commission', agency_com],
         ['Total Agent Commissions', agent_com],
@@ -127,7 +127,7 @@ class StatementsController < ApplicationController
     book = Spreadsheet::Workbook.new
     sheet = book.create_worksheet
     bold = Spreadsheet::Format.new weight: :bold
-
+    s = @statement
     cols = [
       'ID',
       'Agent',
@@ -166,11 +166,33 @@ class StatementsController < ApplicationController
       c << record.statement_date.strftime('%m-%d-%Y')
       c << record.earned_date.strftime('%m-%d-%Y')
       sheet.row(1 + i).replace c
+      length += 1
     end
     len = [10, 20, 20, 20, 20, 20]
     len.each_with_index do |col, i|
       sheet.column(i).width = col
     end
+    length += 4
+    total_com = 1
+    agency_com = 1
+    agent_com = 1
+    carrier_com = 1
+    summary = [
+      ['Agent', s.user.name],
+      ['Statement Month', s.date.strftime('%m-%d-%Y')],
+      ['Total Commissions Received', total_com],
+      ['Agency Commission', agency_com],
+      ['Total Agent Commissions', agent_com],
+      ['Commissions by Carrier', carrier_com],
+      ['Regence', 1],
+    ]
+    n_sum = []
+    summary.each_with_index do |row, i|
+      z = [''] * 5
+      sheet.row(length + i).replace (z + row)
+      sheet.row(length + i).set_format(5, (Spreadsheet::Format.new :weight => :bold))
+    end
+
     code = SecureRandom.hex 
     file = "#{Rails.root}/public/tmp/files/#{code}.xls"
     File.open(file, "w") {}
