@@ -95,19 +95,31 @@ class StatementsController < ApplicationController
         length = c.length
       end
       table(data, position: :center)
-      total_com = 1
-      agency_com = 1
-      agent_com = 1
-      carrier_com = 1
+      x = {}
+      carrier_com = records
+        .map(&:client)
+        .map(&:policy)
+        .map {|p| [p.carrier, p.commission] }
+        .map do |c|
+          x[c[0]] = 0 unless x[c[0]]
+          x[c[0]] += c[1]
+          c[1]
+        end
+        .inject(&:+)
+      total_com = records.map(&:commission).inject(&:+)
+      if s.user.commission
+        agent_com = (total_com * (s.user.commission / 100.0)).round(1)
+      else
+        agent_com = 0
+      end
       summary = [
         ['Agent', s.user.name],
         ['Statement Month', s.date.strftime('%m-%d-%Y')],
         ['Total Commissions Received', total_com],
-        ['Agency Commission', agency_com],
         ['Total Agent Commissions', agent_com],
         ['Commissions by Carrier', carrier_com],
-        ['Regence', 1],
       ]
+      x.each { |car, com| summary << [car, com]}
       n_sum = []
       summary.each do |row|
         n_row = [{content: row[0], font_style: :bold}, {content: row[1].to_s, align: :center}]
@@ -173,26 +185,37 @@ class StatementsController < ApplicationController
       sheet.column(i).width = col
     end
     length += 4
-    total_com = 1
-    agency_com = 1
-    agent_com = 1
-    carrier_com = 1
+    x = {}
+    carrier_com = records
+      .map(&:client)
+      .map(&:policy)
+      .map {|p| [p.carrier, p.commission] }
+      .map do |c|
+        x[c[0]] = 0 unless x[c[0]]
+        x[c[0]] += c[1]
+        c[1]
+      end
+      .inject(&:+)
+    total_com = records.map(&:commission).inject(&:+)
+    if s.user.commission
+      agent_com = (total_com * (s.user.commission / 100.0)).round(1)
+    else
+      agent_com = 0
+    end
     summary = [
       ['Agent', s.user.name],
       ['Statement Month', s.date.strftime('%m-%d-%Y')],
       ['Total Commissions Received', total_com],
-      ['Agency Commission', agency_com],
       ['Total Agent Commissions', agent_com],
       ['Commissions by Carrier', carrier_com],
-      ['Regence', 1],
     ]
+    x.each { |car, com| summary << [car, com]}
     n_sum = []
     summary.each_with_index do |row, i|
       z = [''] * 5
       sheet.row(length + i).replace (z + row)
       sheet.row(length + i).set_format(5, (Spreadsheet::Format.new :weight => :bold))
     end
-
     code = SecureRandom.hex 
     file = "#{Rails.root}/public/tmp/files/#{code}.xls"
     File.open(file, "w") {}
