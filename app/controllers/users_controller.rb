@@ -37,7 +37,8 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
-    if @user.update(user_params)
+    @user.attributes = user_params
+    if @user.save(validate: false)
       render :show, status: :ok, location: @user
     else
       render json: @user.errors, status: :unprocessable_entity
