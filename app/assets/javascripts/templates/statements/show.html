@@ -65,23 +65,19 @@
       </tr>
       <tr>
         <td>Total Commissions Received:</td>
-        <td>{{statement.total_coms}}</td>
-      </tr>
-      <tr>
-        <td>Agency Commission:</td>
-        <td>{{statement.total_coms}}</td>
+        <td>{{statement.total_com}}</td>
       </tr>
       <tr>
         <td>Total Agent Commissions:</td>
-        <td>{{statement.total_coms}}</td>
+        <td>{{statement.agent_com}}</td>
       </tr>
       <tr>
         <td>Commissions by Carrier</td>
-        <td></td>
+        <td>{{statement.carrier_com}}</td>
       </tr>
-      <tr>
-        <td>Regence:</td>
-        <td>{{statement.total_coms}}</td>
+      <tr data-ng-repeat="(carrier, value) in statement.coms_by_carrier">
+        <td>{{carrier}}</td>
+        <td>{{value}}</td>
       </tr>
     </table>
     <footer class="text-right">

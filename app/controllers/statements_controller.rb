@@ -95,31 +95,14 @@ class StatementsController < ApplicationController
         length = c.length
       end
       table(data, position: :center)
-      x = {}
-      carrier_com = records
-        .map(&:client)
-        .map(&:policy)
-        .map {|p| [p.carrier, p.commission] }
-        .map do |c|
-          x[c[0]] = 0 unless x[c[0]]
-          x[c[0]] += c[1]
-          c[1]
-        end
-        .inject(&:+)
-      total_com = records.map(&:commission).inject(&:+)
-      if s.user.commission
-        agent_com = (total_com * (s.user.commission / 100.0)).round(1)
-      else
-        agent_com = 0
-      end
       summary = [
         ['Agent', s.user.name],
         ['Statement Month', s.date.strftime('%m-%d-%Y')],
-        ['Total Commissions Received', total_com],
-        ['Total Agent Commissions', agent_com],
-        ['Commissions by Carrier', carrier_com],
+        ['Total Commissions Received', s.total_com],
+        ['Total Agent Commissions', s.agent_com],
+        ['Commissions by Carrier', s.carrier_com],
       ]
-      x.each { |car, com| summary << [car, com]}
+      s.coms_by_carrier.each { |car, com| summary << [car, com]}
       n_sum = []
       summary.each do |row|
         n_row = [{content: row[0], font_style: :bold}, {content: row[1].to_s, align: :center}]
@@ -185,31 +168,14 @@ class StatementsController < ApplicationController
       sheet.column(i).width = col
     end
     length += 4
-    x = {}
-    carrier_com = records
-      .map(&:client)
-      .map(&:policy)
-      .map {|p| [p.carrier, p.commission] }
-      .map do |c|
-        x[c[0]] = 0 unless x[c[0]]
-        x[c[0]] += c[1]
-        c[1]
-      end
-      .inject(&:+)
-    total_com = records.map(&:commission).inject(&:+)
-    if s.user.commission
-      agent_com = (total_com * (s.user.commission / 100.0)).round(1)
-    else
-      agent_com = 0
-    end
     summary = [
       ['Agent', s.user.name],
       ['Statement Month', s.date.strftime('%m-%d-%Y')],
-      ['Total Commissions Received', total_com],
-      ['Total Agent Commissions', agent_com],
-      ['Commissions by Carrier', carrier_com],
+      ['Total Commissions Received', s.total_com],
+      ['Total Agent Commissions', s.agent_com],
+      ['Commissions by Carrier', s.carrier_com],
     ]
-    x.each { |car, com| summary << [car, com]}
+    s.coms_by_carrier.each { |car, com| summary << [car, com]}
     n_sum = []
     summary.each_with_index do |row, i|
       z = [''] * 5
