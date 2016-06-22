@@ -1,6 +1,8 @@
 class Statement < ActiveRecord::Base
   belongs_to :user
 
+  scope :dash, -> { where('date >= ?', 2.month.ago.change(day: 1)).order(:date) }
+
   def coms
     Commission.from_statement(self)
   end

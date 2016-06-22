@@ -5,5 +5,8 @@ angular
     '$scope'
     '$state'
     '$stateParams'
-    ($scope, $state, $stateParams) -> console.log 1
+    'Statement'
+    ($scope, $state, $stateParams, Statement) ->
+      Statement.query dash: true, (res) ->
+        $scope.statements = res
   ]

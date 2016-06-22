@@ -5,4 +5,20 @@
       <a class="btn btn-lg btn-success" role="button" data-ui-sref="auth.statements.new">Generate Agent Statement</a>
     </div>
   </div>
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+      <table class="table statements">
+        <thead>
+          <th>Agent</th>
+          <th data-ng-repeat="statement in statements">{{statement.month}}</th>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="statement in statements">
+            <td>{{statement.user_name}}</td>
+            <td data-ng-repeat="s in statements">{{s.status == 1 ? 'Completed' : '-'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

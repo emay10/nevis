@@ -3,7 +3,12 @@ class StatementsController < ApplicationController
 
   # GET /statements
   def index
-    @statements = Statement.all
+    #@statements = current_user.statements
+    if params[:dash] == 'true'
+      @statements = Statement.dash
+    else
+      @statements = Statement.all
+    end
   end
 
   # GET /statements/1
