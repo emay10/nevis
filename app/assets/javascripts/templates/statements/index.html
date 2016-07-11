@@ -24,6 +24,7 @@
         <th data-ts-criteria="id" data-ts-default>ID</th>
         <th data-ts-criteria="user.name">Agent</th>
         <th data-ts-criteria="date">Statement Month</th>
+        <th data-ts-criteria="status">Paid</th>
         <th></th>
       </thead>
       <tbody>
@@ -36,6 +37,9 @@
           </td>
           <td>
             {{statement.date|date:'MMM yyyy'}}
+          </td>
+          <td>
+            <input type="checkbox" data-ng-model="statement.status" data-ng-change="updateStatus(statement)">
           </td>
           <td>
             <!--<a class="btn btn-xs btn-primary" data-ui-sref="auth.commissions.edit({id: commission.id})"><i class="fa fa-pencil"></i></a>-->

@@ -34,9 +34,7 @@ class StatementsController < ApplicationController
   # PATCH/PUT /statements/1
   def update
     if @statement.update(statement_params)
-      render :show, status: :ok, location: @statement
-    else
-      render json: @statement.errors, status: :unprocessable_entity
+      render status: :ok, nothing: true
     end
   end
 
@@ -202,6 +200,6 @@ class StatementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def statement_params
-      params.permit(:users, :month, :year)
+      params.permit(:users, :date, :year, :status)
     end
 end

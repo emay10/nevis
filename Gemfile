@@ -16,6 +16,7 @@ gem 'font-awesome-rails'
 gem 'spreadsheet'
 gem 'prawn'
 gem 'prawn-table'
+gem 'stripe'
 
 group :development, :test do
   gem 'byebug'

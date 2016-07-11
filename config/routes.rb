@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       get 'xls', on: :collection
       post 'import', on: :collection
     end
+    resources :charges
   end
   root 'static#index'
   match '*path', to: 'static#index', via: :all

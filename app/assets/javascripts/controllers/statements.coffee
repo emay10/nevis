@@ -9,6 +9,8 @@ angular
     ($scope, $state, $stateParams, Statement) ->
       Statement.query (res) ->
         $scope.statements = res
+      $scope.updateStatus = (statement) ->
+        statement.$update(id: statement.id)
       $scope.remove = (id) ->
         statement = new Statement(id: id)
         if statement

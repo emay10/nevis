@@ -5,12 +5,14 @@ angular.module 'nscom', [
   'ngFileUpload'
   'ui.bootstrap'
   'tableSort'
+  'stripe.checkout'
   'nscom.controllers.users'
   'nscom.controllers.clients'
   'nscom.controllers.commissions'
   'nscom.controllers.statements'
   'nscom.controllers.policies'
   'nscom.controllers.static'
+  'nscom.controllers.payments'
   'nscom.factories.users'
   'nscom.factories.clients'
   'nscom.factories.commissions'
@@ -94,6 +96,13 @@ angular.module 'nscom'
           url: '/users'
           templateUrl: 'users/index.html'
           controller: 'usersIndexController'
+        .state 'auth.payments',
+          abstract: true
+          template: '<ui-view/>'
+        .state 'auth.payments.new',
+          url: '/payments'
+          templateUrl: 'payments/index.html'
+          controller: 'paymentsNewController'
         .state 'auth.static',
           abstract: true
           template: '<ui-view/>'

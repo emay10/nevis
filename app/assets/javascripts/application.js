@@ -18,6 +18,7 @@
 //= require angular-resource
 //= require angular-bootstrap
 //= require angular-tablesort
+//= require angular-stripe-checkout
 //= require satellizer
 //= require ng-file-upload
 //= require angular-rails-templates
