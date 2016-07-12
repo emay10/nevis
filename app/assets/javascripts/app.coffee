@@ -12,11 +12,12 @@ angular.module 'nscom', [
   'nscom.controllers.statements'
   'nscom.controllers.policies'
   'nscom.controllers.static'
-  'nscom.controllers.payments'
+  'nscom.controllers.orders'
   'nscom.factories.users'
   'nscom.factories.clients'
   'nscom.factories.commissions'
   'nscom.factories.policies'
+  'nscom.factories.orders'
   'templates'
 ]
 
@@ -96,13 +97,13 @@ angular.module 'nscom'
           url: '/users'
           templateUrl: 'users/index.html'
           controller: 'usersIndexController'
-        .state 'auth.payments',
+        .state 'auth.orders',
           abstract: true
           template: '<ui-view/>'
-        .state 'auth.payments.new',
-          url: '/payments'
-          templateUrl: 'payments/index.html'
-          controller: 'paymentsNewController'
+        .state 'auth.orders.new',
+          url: '/orders'
+          templateUrl: 'orders/new.html'
+          controller: 'ordersNewController'
         .state 'auth.static',
           abstract: true
           template: '<ui-view/>'
