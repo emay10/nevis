@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   enum role: [:user, :manager, :admin]
 
   def coworkers
-    agency.users
+    agency.users if agency
   end
 
   def co_ids
