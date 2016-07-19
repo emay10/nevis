@@ -36,7 +36,7 @@ angular.module 'nscom'
       $locationProvider.html5Mode true
       $authProvider.tokenName = 'jwt'
       $authProvider.loginUrl = '/api/auth/auth_token'
-      $authProvider.signupUrl = '/api/auth'
+      $authProvider.signupUrl = '/api/users'
 
       $stateProvider
         .state 'users',

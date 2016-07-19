@@ -1,0 +1,55 @@
+<div class="row sign-up">
+  <div class="col-xs-4 col-xs-offset-4">
+    <form name="sign_up" data-ng-submit="signUp()">
+      <div class="errors" ng-show="errors.length > 0">
+        <div data-ng-repeat="error in errors">
+          {{ error }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input
+          type="email"
+          name="email"
+          class="form-control"
+          placeholder="Email"
+          data-ng-model="form.email"
+          data-ng-required="true"
+        >
+        <span class="error" ng-show="!init && sign_up.email.$error.required">The field is required</span>
+      </div>
+
+      <div class="form-group">
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          placeholder="Password"
+          data-ng-model="form.password"
+          data-ng-required="true"
+        >
+        <span class="error" ng-show="!init && sign_up.password.$error.required">The field is required</span>
+      </div>
+
+      <div class="form-group">
+        <input
+          type="password"
+          name="password_confirmation"
+          class="form-control"
+          placeholder="Password Confirmation"
+          data-ng-model="form.password_confirmation"
+          data-ng-required="true"
+        >
+        <span class="error" ng-show="!init && sign_up.password_confirmation.$error.required">The field is required</span>
+      </div>
+      <p class="text-center">
+        <button type="submit" class="btn btn-primary" data-ng-disabled="processing">
+          Sign Up
+        </button>
+      </p>
+      <p class="register-btn text-center">
+        <a class="btn btn-default btn-sm" data-ui-sref="users.signin">Already have an account?</a>
+      </p>
+    </form>
+  </div>
+</div>

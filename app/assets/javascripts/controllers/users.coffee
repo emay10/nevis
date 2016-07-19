@@ -41,28 +41,27 @@ angular
     '$auth'
     '$state'
     '$window'
-    ($scope, $auth, $state, $window) ->
+    '$rootScope'
+    'User'
+    ($scope, $auth, $state, $window, $rootScope, User) ->
       $scope.processing = false
       $scope.init = true
       $scope.form =
         email: ''
-        name: ''
-        phone: ''
-        provider: 'phone'
-        token: ''
-        token_confirmation: ''
+        password: ''
+        password_confirmation: ''
       $scope.signUp = ->
         $scope.errors = []
         $scope.init = false
+        success_handler = ->
+          User.current (res) -> $rootScope.current_user = res
+          $state.go 'auth.static.dashboard'
         if $scope.sign_up.$valid
           $scope.processing = true
           $auth
             .signup($scope.form)
             .then (res) ->
-              if code and code.length > 0
-                $window.location = $state.get('albums.join').url.replace(':code', code)
-              else
-                $window.location = $state.get('auth.albums.private').url
+              $auth.login(auth: $scope.form).then success_handler
             .catch (res) ->
               if res.status in [401, 409, 412]
                 $scope.errors.push 'A user with the provided credentials already exists in the system'
