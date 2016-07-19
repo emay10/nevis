@@ -3,12 +3,7 @@ class StatementsController < ApplicationController
 
   # GET /statements
   def index
-    #@statements = current_user.statements
-    if params[:dash] == 'true'
-      @statements = Statement.dash
-    else
-      @statements = Statement.all
-    end
+    @statements = current_user.agency_data(:statements)
   end
 
   # GET /statements/1
@@ -115,7 +110,7 @@ class StatementsController < ApplicationController
       table(n_sum, position: :right, column_widths: [150, 200])
       move_down 20
     end
-    send_file file, type: 'application/pdf', x_sendfile: true
+    render json: {url: "/tmp/files/#{code}.pdf"}
   end
 
   def xls
@@ -189,17 +184,17 @@ class StatementsController < ApplicationController
     file = "#{Rails.root}/public/tmp/files/#{code}.xls"
     File.open(file, "w") {}
     book.write file
-    send_file file, type: 'application/vnd.ms-excel', x_sendfile: true
+    render json: {url: "/tmp/files/#{code}.xls"}
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_statement
-      @statement = Statement.find(params[:id])
+      @statement = Statement.find_by(id: params[:id], user_id: current_user.co_ids)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def statement_params
-      params.permit(:users, :date, :year, :status)
+      params.permit(:users, :date, :year, :month, :status)
     end
 end

@@ -6,9 +6,9 @@ class ClientsController < ApplicationController
     @clients = Client
     unless params[:q].blank?
       @clients = @clients.search(params[:q])
-    else
-      @clients = @clients.all
     end
+    ids = current_user.coworkers.map(&:id)
+    @clients = @clients.select {|c| ids.include? c.user_id }
   end
 
   # GET /clients/1
@@ -19,7 +19,7 @@ class ClientsController < ApplicationController
   def pdf
     require 'prawn'
     require 'securerandom'
-    records = Client.all
+    records = current_user.agency_data(:clients)
     code = SecureRandom.hex 
     file = "#{Rails.root}/public/tmp/files/#{code}.pdf"
     Prawn::Document.generate(file, margin: 40) do
@@ -63,13 +63,13 @@ class ClientsController < ApplicationController
       table(data, position: :center)
       move_down 20
     end
-    send_file file, type: 'application/pdf', x_sendfile: true
+    render json: {url: "/tmp/files/#{code}.pdf"}
   end
 
   def xls
     require 'spreadsheet'
     require 'securerandom'
-    records = Client.all
+    records = current_user.agency_data(:clients)
     book = Spreadsheet::Workbook.new
     sheet = book.create_worksheet
     bold = Spreadsheet::Format.new weight: :bold
@@ -116,7 +116,7 @@ class ClientsController < ApplicationController
     file = "#{Rails.root}/public/tmp/files/#{code}.xls"
     File.open(file, "w") {}
     book.write file
-    send_file file, type: 'application/vnd.ms-excel', x_sendfile: true
+    render json: {url: "/tmp/files/#{code}.xls"}
   end
 
   # POST /clients
@@ -147,7 +147,7 @@ class ClientsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_client
-      @client = Client.find(params[:id])
+      @client = Client.find_by(id: params[:id], user_id: current_user.co_ids)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

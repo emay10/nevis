@@ -3,7 +3,8 @@ class CommissionsController < ApplicationController
 
   # GET /commissions
   def index
-    @commissions = Commission.all
+    clients = current_user.agency_data(:clients).map(&:id)
+    @commissions = Commission.where(client_id: clients)
   end
 
   # GET /commissions/1
@@ -50,7 +51,8 @@ class CommissionsController < ApplicationController
   def pdf
     require 'prawn'
     require 'securerandom'
-    records = Commission.all
+    clients = current_user.agency_data(:clients).map(&:id)
+    records = Commission.where(client_id: clients)
     code = SecureRandom.hex 
     file = "#{Rails.root}/public/tmp/files/#{code}.pdf"
     Prawn::Document.generate(file, margin: 40) do
@@ -102,13 +104,14 @@ class CommissionsController < ApplicationController
       table(data, position: :center)
       move_down 20
     end
-    send_file file, type: 'application/pdf', x_sendfile: true
+    render json: {url: "/tmp/files/#{code}.pdf"}
   end
 
   def xls
     require 'spreadsheet'
     require 'securerandom'
-    records = Commission.all
+    clients = current_user.agency_data(:clients).map(&:id)
+    records = Commission.where(client_id: clients)
     book = Spreadsheet::Workbook.new
     sheet = book.create_worksheet
     bold = Spreadsheet::Format.new weight: :bold
@@ -160,7 +163,7 @@ class CommissionsController < ApplicationController
     file = "#{Rails.root}/public/tmp/files/#{code}.xls"
     File.open(file, "w") {}
     book.write file
-    send_file file, type: 'application/vnd.ms-excel', x_sendfile: true
+    render json: {url: "/tmp/files/#{code}.xls"}
   end
 
   # POST /commissions
@@ -192,7 +195,8 @@ class CommissionsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_commission
-      @commission = Commission.find(params[:id])
+      ids = Client.where(user_id: current_user.co_ids).map(&:id)
+      @commission = Commission.find_by(id: params[:id], client_id: ids)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

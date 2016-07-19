@@ -5,8 +5,9 @@ angular
     '$scope'
     '$state'
     '$stateParams'
+    '$window'
     'Client'
-    ($scope, $state, $stateParams, Client) ->
+    ($scope, $state, $stateParams, $window, Client) ->
       $scope.search =
         field: ''
         query: ''
@@ -18,6 +19,8 @@ angular
       Client.query (res) ->
         $scope.original = res
         $scope.clients = res
+      $scope.export = (kind) ->
+        Client[kind] (res) -> $window.open(res.url, '_blank')
       $scope.filter = ->
         search = $scope.search
         if search.field.length > 0 and search.query.length > 0

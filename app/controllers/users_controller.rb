@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.all
+    @users = current_user.coworkers
   end
 
   def current
@@ -13,15 +13,6 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-  end
-
-  # GET /users/new
-  def new
-    @user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
   end
 
   # POST /users

@@ -5,8 +5,9 @@ angular
     '$scope'
     '$state'
     '$stateParams'
+    '$window'
     'Commission'
-    ($scope, $state, $stateParams, Commission) ->
+    ($scope, $state, $stateParams, $window, Commission) ->
       $scope.search =
         field: ''
         query: ''
@@ -15,7 +16,8 @@ angular
         if commission
           commission.$remove id: id, ->
             $scope.commissions = $scope.commissions.filter (e) -> e.id != id
-
+      $scope.export = (kind) ->
+        Commission[kind] (res) -> $window.open(res.url, '_blank')
       Commission.query (res) ->
         $scope.original = res
         $scope.commissions = res

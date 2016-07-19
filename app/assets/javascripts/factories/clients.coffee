@@ -13,6 +13,10 @@ angular.module 'nscom.factories.clients', []
         query:
           #vulnerable
           isArray: true
+        pdf:
+          url: API_URL + 'clients/pdf'
+        xls:
+          url: API_URL + 'clients/xls'
         save:
           method: 'POST'
           url: API_URL + 'clients'

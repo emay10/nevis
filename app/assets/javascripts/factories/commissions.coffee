@@ -16,6 +16,10 @@ angular.module 'nscom.factories.commissions', []
         save:
           method: 'POST'
           url: API_URL + 'commissions'
+        pdf:
+          url: API_URL + 'commissions/pdf'
+        xls:
+          url: API_URL + 'commissions/xls'
   ]
 
   .factory 'Statement', [
@@ -35,4 +39,8 @@ angular.module 'nscom.factories.commissions', []
         save:
           method: 'POST'
           url: API_URL + 'statements'
+        pdf:
+          url: API_URL + 'statements/:id/pdf'
+        xls:
+          url: API_URL + 'statements/:id/xls'
   ]

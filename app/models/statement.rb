@@ -26,11 +26,11 @@ class Statement < ActiveRecord::Base
       .map(&:client)
       .map(&:policy)
       .map(&:commission)
-      .inject(&:+)
+      .inject(&:+) or 0
   end
 
   def total_com
-    coms.map(&:commission).inject(&:+)
+    coms.map(&:commission).inject(&:+) or 0
   end
 
   def agent_com

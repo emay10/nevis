@@ -50,10 +50,13 @@ angular
     '$scope'
     '$state'
     '$stateParams'
+    '$window'
     'Statement'
-    ($scope, $state, $stateParams, Statement) ->
+    ($scope, $state, $stateParams, $window, Statement) ->
       statement_id = $stateParams.id
       Statement.get id: statement_id, (res) ->
         $scope.statement = res
         $scope.commissions = res.commissions
+      $scope.export = (kind) ->
+        Statement[kind] id: statement_id, (res) -> $window.open(res.url, '_blank')
   ]
