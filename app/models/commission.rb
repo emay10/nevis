@@ -12,7 +12,7 @@ class Commission < ActiveRecord::Base
   def self.by_user u
     commissions = []
     clients = u.agency_data(:clients)
-    if clients.length > 0
+    if clients
       client_ids = clients.map(&:id)
       commissions = Commission.where(client_id: client_ids)
     end
