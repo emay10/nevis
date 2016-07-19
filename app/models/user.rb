@@ -10,10 +10,10 @@ class User < ActiveRecord::Base
   end
 
   def co_ids
-    coworkers.map(&:id)
+    coworkers.map(&:id) if coworkers
   end
 
   def agency_data rel
-    coworkers.map(&rel).flatten
+    coworkers.map(&rel).flatten if coworkers
   end
 end
