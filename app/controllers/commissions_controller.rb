@@ -3,8 +3,7 @@ class CommissionsController < ApplicationController
 
   # GET /commissions
   def index
-    clients = current_user.agency_data(:clients).map(&:id)
-    @commissions = Commission.where(client_id: clients)
+    @commissions = Commission.by_user current_user
   end
 
   # GET /commissions/1
@@ -51,8 +50,7 @@ class CommissionsController < ApplicationController
   def pdf
     require 'prawn'
     require 'securerandom'
-    clients = current_user.agency_data(:clients).map(&:id)
-    records = Commission.where(client_id: clients)
+    records = Commission.by_user current_user
     code = SecureRandom.hex 
     file = "#{Rails.root}/public/tmp/files/#{code}.pdf"
     Prawn::Document.generate(file, margin: 40) do
@@ -110,8 +108,7 @@ class CommissionsController < ApplicationController
   def xls
     require 'spreadsheet'
     require 'securerandom'
-    clients = current_user.agency_data(:clients).map(&:id)
-    records = Commission.where(client_id: clients)
+    records = Commission.by_user current_user
     book = Spreadsheet::Workbook.new
     sheet = book.create_worksheet
     bold = Spreadsheet::Format.new weight: :bold
