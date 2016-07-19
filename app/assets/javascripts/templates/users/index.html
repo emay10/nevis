@@ -12,9 +12,9 @@
       <thead>
         <th data-ts-criteria="id" data-ts-default>ID</th>
         <th data-ts-criteria="name">Name</th>
+        <th data-ts-criteria="commission">Commission Split</th>
         <th data-ts-criteria="email">Email</th>
-        <th data-ts-criteria="commission">Commission</th>
-        <th data-ts-criteria="agency.name">Agency</th>
+        <th class="hidden" data-ts-criteria="agency.name">Agency</th>
         <th></th>
       </thead>
       <tbody>
@@ -26,12 +26,12 @@
             {{user.name}}
           </td>
           <td>
-            {{user.email}}
-          </td>
-          <td>
             {{user.commission}}
           </td>
           <td>
+            {{user.email}}
+          </td>
+          <td class="hidden">
             {{user.agency.name}}
           </td>
           <td>
