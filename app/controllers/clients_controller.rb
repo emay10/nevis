@@ -8,7 +8,7 @@ class ClientsController < ApplicationController
       @clients = @clients.search(params[:q])
     end
     ids = current_user.co_ids
-    if ids
+    if ids and ids.length > 0
       @clients = @clients.select {|c| ids.include? c.user_id }
     else
       @clients = []

@@ -10,10 +10,10 @@ class User < ActiveRecord::Base
   end
 
   def co_ids
-    coworkers.map(&:id) if coworkers
+    coworkers.map(&:id) if coworkers and coworkers.length > 0
   end
 
   def agency_data rel
-    coworkers.map(&rel).flatten if coworkers
+    coworkers.map(&rel).flatten if coworkers and coworkers.length > 0
   end
 end
