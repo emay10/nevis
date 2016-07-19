@@ -7,7 +7,7 @@ class ClientsController < ApplicationController
     unless params[:q].blank?
       @clients = @clients.search(params[:q])
     end
-    ids = current_user.coworkers.map(&:id)
+    ids = current_user.co_ids
     @clients = @clients.select {|c| ids.include? c.user_id }
   end
 
