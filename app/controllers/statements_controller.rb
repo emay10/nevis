@@ -150,13 +150,14 @@ class StatementsController < ApplicationController
       'ID',
       'Client',
       'Policy',
-      'Statement Month',
-      'Earned Month',
+      'Commission Amount',
+      'Commission Split',
+      'Agent Commission',
     ]
     length += 1
     policies.each do |policy|
       sheet.row(length).set_format(0, bold)
-      sheet.row(length).replace [policy.second, "Total: #{z[policy.second]}"]
+      sheet.row(length).replace [policy.second, "Total: $#{z[policy.second]}"]
       length += 1
       sheet.row(length).replace cols
       sheet.row(length).default_format = bold
@@ -176,8 +177,21 @@ class StatementsController < ApplicationController
         else
           c << ''
         end
-        c << record.statement_date.strftime('%m-%d-%Y')
-        c << record.earned_date.strftime('%m-%d-%Y')
+        if record.client and record.client.policy
+          c << "$#{record.client.policy.commission}"
+        else
+          c << ''
+        end
+        if record.client and record.client.user
+          c << "#{record.client.user.commission}%"
+        else
+          c << ''
+        end
+        if record.commission
+          c << "$#{record.commission}"
+        else
+          c << ''
+        end
         sheet.row(length + i).replace c
         t += 1
       end
