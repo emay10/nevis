@@ -5,6 +5,6 @@ json.array!(@commissions) do |commission|
   json.policy commission.client.policy
   json.user commission.client.user
   json.commission commission.commission
-  json.statement_date commission.statement_date.to_time.to_i * 1000 if json.statement_date
-  json.earned_date commission.earned_date.to_time.to_i * 1000 if json.earned_date
+  json.statement_date commission.statement_date.to_time.to_i * 1000 if commission.statement_date
+  json.earned_date commission.earned_date.to_time.to_i * 1000 if commission.earned_date
 end
