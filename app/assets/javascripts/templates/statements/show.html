@@ -8,53 +8,8 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-12">
-    <table class="table table-striped table-hover" data-ts-wrapper>
-      <thead>
-        <th data-ts-criteria="id" data-ts-default>ID</th>
-        <th data-ts-criteria="user.name">Agent</th>
-        <th data-ts-criteria="policy.carrier">Carrier</th>
-        <th data-ts-criteria="client.name">Client</th>
-        <th data-ts-criteria="policy.kind">Policy</th>
-        <th data-ts-criteria="statement_date">Statement Month</th>
-        <th data-ts-criteria="earned_date">Earned Month</th>
-        <th data-ts-criteria="commission|parseInt">Commission</th>
-      </thead>
-      <tbody>
-        <tr data-ng-repeat="commission in commissions" data-ts-repeat>
-          <td>
-            {{commission.id}}
-          </td>
-          <td>
-            {{commission.user.name}}
-          </td>
-          <td>
-            {{commission.policy.carrier}}
-          </td>
-          <td>
-            {{commission.client.name}}
-          </td>
-          <td>
-            {{commission.policy.kind}}
-          </td>
-          <td>
-            {{commission.statement_date|date:'MMM yyyy'}}
-          </td>
-          <td>
-            {{commission.earned_date|date:'MMM yyyy'}}
-          </td>
-          <td>
-            <span data-ng-show="commission.commission != 0">${{commission.commission}}</span>
-            <span data-ng-show="commission.commission == 0">-</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-offset-7 col-xs-5">
-    <table class="table statement-summary">
+  <div class="col-xs-5">
+    <table class="statement-summary">
       <tr>
         <td>Agent:</td>
         <td>{{statement.user.name}}</td>
@@ -63,26 +18,68 @@
         <td>Statement Month:</td>
         <td>{{statement.date}}</td>
       </tr>
-      <tr>
-        <td>Total Commissions Received:</td>
-        <td>{{statement.total_com}}</td>
-      </tr>
+      <tr><td></td><td></td></tr>
       <tr>
         <td>Total Agent Commissions:</td>
-        <td>{{statement.agent_com}}</td>
+        <td>${{statement.agent_com}}</td>
       </tr>
       <tr>
         <td>Commissions by Carrier</td>
-        <td>{{statement.carrier_com}}</td>
+        <td></td>
       </tr>
       <tr data-ng-repeat="(carrier, value) in statement.coms_by_carrier">
-        <td>{{carrier}}</td>
-        <td>{{value}}</td>
+        <td>{{carrier}}:</td>
+        <td>${{value}}</td>
       </tr>
     </table>
-    <footer class="text-right">
-      <a class="btn btn-sm btn-primary" data-ng-click="export('pdf')">Export to PDF</a>
-      <a class="btn btn-sm btn-primary" data-ng-click="export('xls')">Export to XLS</a>
-    </footer>
   </div>
+</div>
+<div class="row" data-ng-repeat="carrier in statement.carriers">
+  <div class="col-xs-12">
+    <div class="row carrier-info">
+      <div class="col-xs-2">
+        <strong>{{carrier.name}}:</strong>
+      </div>
+      <div class="col-xs-3"><strong>Total:</strong> ${{statement.coms_by_carrier[carrier.name]}}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-8">
+        <table class="table table-striped table-hover" data-ts-wrapper>
+          <thead>
+            <th data-ts-criteria="client">Client</th>
+            <th data-ts-criteria="policy">Policy</th>
+            <th data-ts-criteria="policy_com|parseInt">Commission Amount</th>
+            <th data-ts-criteria="user_com|parseInt">Commission Split</th>
+            <th data-ts-criteria="commission|parseInt">Commission</th>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="commission in carrier.commissions" data-ts-repeat>
+              <td>
+                {{commission.client}}
+              </td>
+              <td>
+                {{commission.policy}}
+              </td>
+              <td>
+                ${{commission.policy_com}}
+              </td>
+              <td>
+                ${{commission.user_com}}
+              </td>
+              <td>
+                <span data-ng-show="commission.com != 0">${{commission.com}}</span>
+                <span data-ng-show="commission.com == 0">-</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <footer class="text-right">
+    <a class="btn btn-sm btn-primary" data-ng-click="export('pdf')">Export to PDF</a>
+    <a class="btn btn-sm btn-primary" data-ng-click="export('xls')">Export to XLS</a>
+  </footer>
 </div>

@@ -4,6 +4,7 @@ json.total_com @statement.total_com
 json.agent_com @statement.agent_com
 json.carrier_com @statement.carrier_com
 json.coms_by_carrier @statement.coms_by_carrier
+json.carriers @carriers
 json.commissions @commissions do |commission|
   json.extract! commission, :id, :statement_date, :earned_date
   json.client commission.client

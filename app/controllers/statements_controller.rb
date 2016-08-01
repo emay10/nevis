@@ -9,6 +9,31 @@ class StatementsController < ApplicationController
   # GET /statements/1
   def show
     @commissions = Commission.from_statement(@statement)
+    policies = @commissions
+      .map(&:client)
+      .map(&:policy)
+      .map {|x| [x.id, x.carrier] }
+    policies.uniq! {|x| x.first }
+    @carriers = []
+    policies.each do |policy|
+      o = {
+        'id': policy[0],
+        'name': policy[1],
+      }
+      cls = Client.where(policy_id: policy.first).map(&:id)
+      updated = []
+      @commissions.where(client_id: cls).each do |c|
+        z = {}
+        z['client'] = c.client.name if c.client
+        z['policy'] = c.client.policy.kind if c.client.policy
+        z['policy_com'] = c.client.policy.commission if c.client.policy
+        z['user_com'] = c.client.user.commission if c.client.user
+        z['com'] = c.commission if c.commission
+        updated << z
+      end
+      o['commissions'] = updated
+      @carriers << o
+    end
   end
 
   # POST /statements
